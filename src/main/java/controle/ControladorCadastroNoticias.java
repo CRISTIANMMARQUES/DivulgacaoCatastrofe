@@ -14,4 +14,11 @@ public class ControladorCadastroNoticias {
             return Noticia.inserirNoticia(noticia);
         }else return "Noticia já cadastrada";
     }
+    public String alterarNoticia(Noticia noticia_informada){
+        Noticia noticias_cadastradas = Noticia.buscarNoticias(noticia_informada.getSequencial());
+        if((noticia_informada.getAgenciaNoticia().getCnpj().equals(noticias_cadastradas.getAgenciaNoticia().getCnpj())) 
+                && (noticia_informada.getCatastrofe().getSequencial() == noticias_cadastradas.getCatastrofe().getSequencial())){
+            return Noticia.alterarNoticia(noticia_informada);
+        }else return "Alteração não permitida: CNPJ da Agencia de Noticia ou sequencial da Catastrofe foram alterados";
+    }
 }

@@ -77,7 +77,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     
     private Noticia obtemNoticiaInformada(){
         String sequencial_str = sequencialTextField.getText();
-        int sequencial = 0;//cara doido
+        int sequencial = 0;
         if(!sequencial_str.isEmpty())sequencial = Integer.parseInt(sequencial_str);
         AgenciaNoticia visao_agencia_noticia = (AgenciaNoticia) agencias_cadastradasComboBox.getSelectedItem();
         if(visao_agencia_noticia == null) return null;
@@ -190,7 +190,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         alterarNoticiaButton.setText("Alterar");
         alterarNoticiaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                alterarNoticiaButtonActionPerformed(evt);
+                alterarNoticiaButton(evt);
             }
         });
         comandosPanel.add(alterarNoticiaButton);
@@ -296,9 +296,16 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_consultarNoticiaButtonActionPerformed
 
-    private void alterarNoticiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarNoticiaButtonActionPerformed
+    private void alterarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarNoticiaButton
         // TODO add your handling code here:
-    }//GEN-LAST:event_alterarNoticiaButtonActionPerformed
+        Noticia noticia = obtemNoticiaInformada();
+        String mensagem_erro = null;
+        if(noticia != null){
+            mensagem_erro = controlador.alterarNoticia(noticia);
+        }
+        else mensagem_erro = "Algum atributo da Noticia não foi informado";
+        if(mensagem_erro != null) informarErro(mensagem_erro);
+    }//GEN-LAST:event_alterarNoticiaButton
 
     private void inserirNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirNoticiaButton
         Noticia noticia = obterNoticiaInformada();

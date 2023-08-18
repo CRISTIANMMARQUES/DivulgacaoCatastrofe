@@ -78,7 +78,7 @@ public class Noticia {
         return agencia_noticia;
     }
     
-    public static boolean existeAvaliacao(String chave_agencia_noticia, int chave_catastrofe){
+    public static boolean existeNoticia(String chave_agencia_noticia, int chave_catastrofe){
         String sql = "SELECT sequencial FROM noticia WHRE AgenciaID = ? AND CatastrofeID = ?";
         ResultSet lista_resultados = null;
         boolean existe = false;
@@ -104,7 +104,28 @@ public class Noticia {
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
             comando.setString(1, noticia.getDescricao());
             comando.setString(2, noticia.getAgenciaNoticia().getCnpj());
-            comando.setInt(3, noti);
+            comando.setInt(3, noticia.getCatastrofe().getSequencial());
+            int indice_grau_urgencia = -1;
+            if(noticia.getGrauUrgencia() != null){
+                indice_grau_urgencia = noticia.getGrauUrgencia().ordinal();
+            }
+            comando.setInt(4, indice_grau_urgencia);
+            comando.setTimestamp(5, noticia.getDataHora());
+            comando.executeUpdate();
+            comando.close();
+            return null;
+        }catch(SQLException excecao_sql){
+            excecao_sql.printStackTrace();
+            return "Erro na inserção da Noticia no BD";
+        }
+    }
+    
+    public static String alterarNoticia(Noticia noticia){
+        String sql = "UPDATE Noticia SET Descricao = ?, AgenciaID = ?, CatastrofeID = ?, GrauUrgencia = ? WHERE Sequencia = ?";
+        try{
+            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            comando.setString(1, noticia.getDescricao());
+            comando.setString(2, noticia);
         }
     }
 
