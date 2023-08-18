@@ -74,6 +74,11 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         
         return new Noticia(sequencial, descricao, visao_agencia_noticia, visao_catastrofes, grau_urgencia, data_hora);
     }
+    
+    private Noticia obtemNoticiaInformada(){
+        String sequencial_str = sequencialTextField.getText();
+        int sequencial = 0;
+    }
         
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -288,7 +293,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         if(noticia != null) mensagem_erro = controlador.inserirNoticia(noticia);
         else mensagem_erro = "Campos faltando no cadastro de Noticia";
         if(mensagem_erro == null){
-            int sequencial = Noticia.ultimaNoticia();
+            int sequencial = Noticia.ultimoSequencial();
             noticia.setSequencial(sequencial);
             modelo_lista_noticia.addElement(noticia.getVisao);
             noticias_cadastradasList.setSelectedIndex(modelo_lista_noticia.size() -1);
