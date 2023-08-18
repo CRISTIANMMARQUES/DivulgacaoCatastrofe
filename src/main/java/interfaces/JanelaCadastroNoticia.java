@@ -78,6 +78,19 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     private Noticia obtemNoticiaInformada(){
         String sequencial_str = sequencialTextField.getText();
         int sequencial = 0;
+        if(!sequencial_str.isEmpty())sequencial = Integer.parseInt(sequencial_str);
+        AgenciaNoticia visao_agencia_noticia = (AgenciaNoticia) agencias_cadastradasComboBox.getSelectedItem();
+        if(visao_agencia_noticia == null) return null;
+        Catastrofe visao_catastrofes = (Catastrofe)catastrofes_cadastradasComboBox.getSelectedItem();
+        if(visao_catastrofes == null) return null;
+        GrauUrgencia grau_urgencia = null;
+        if(grau_urgenciabuttonGroup.getSelection() != null){
+            grau_urgencia = GrauUrgencia.values()[grau_urgenciabuttonGroup.getSelection().getMnemonic()];
+        }
+        String descricao = descricaoTextArea.getText();
+        if(descricao.isEmpty()) return null;
+        Timestamp data_hora = new Timestamp(Calendar.getInstance().getTimeInMillis());
+        return new Noticia(sequencial, descricao, visao_agencia_noticia, visao_catastrofes, grau_urgencia, data_hora);
     }
         
     @SuppressWarnings("unchecked")
@@ -126,9 +139,9 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
 
         catastrofesLabel.setText("Catastrofes");
 
-        agencias_cadastradasComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        agencias_cadastradasComboBox.setModel(new DefaultComboBoxModel(agencias_noticias_cadastradas));
 
-        catastrofes_cadastradasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        catastrofes_cadastradasComboBox.setModel(new DefaultComboBoxModel(agencias_noticias_cadastradas));
 
         grau_urgenciaLabel.setText("Grau de Urgencia");
 
