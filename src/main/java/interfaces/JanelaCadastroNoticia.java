@@ -77,7 +77,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     
     private Noticia obtemNoticiaInformada(){
         String sequencial_str = sequencialTextField.getText();
-        int sequencial = 0;
+        int sequencial = 0;//cara doido
         if(!sequencial_str.isEmpty())sequencial = Integer.parseInt(sequencial_str);
         AgenciaNoticia visao_agencia_noticia = (AgenciaNoticia) agencias_cadastradasComboBox.getSelectedItem();
         if(visao_agencia_noticia == null) return null;
