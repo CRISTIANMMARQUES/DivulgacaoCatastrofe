@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import persistencia.BD;
+import interfaces.JanelaCadastroNoticia;
 
 public class Noticia {
     
@@ -52,7 +53,7 @@ public class Noticia {
         return visoes.toArray(new Noticia[visoes.size()]);
     }
     
-    public static Noticia buscarNoticia(Int sequencial) {
+    public static Noticia buscarNoticias(Int sequencial) {
         String sql = "SELECT * FROM Noticia WHERE sequencial = ?";
         ResultSet lista_resultados = null;
         Noticia noticia = null;
