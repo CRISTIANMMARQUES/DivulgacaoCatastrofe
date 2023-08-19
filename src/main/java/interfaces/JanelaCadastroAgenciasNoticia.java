@@ -371,7 +371,6 @@ public class JanelaCadastroAgenciasNoticia extends javax.swing.JFrame {
             } else
                 informarErro(mensagem_erro);
         }
-
     }//GEN-LAST:event_consultarAgenciaNoticiaButton
 
     private void alterarAgenciaNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarAgenciaNoticiaButton

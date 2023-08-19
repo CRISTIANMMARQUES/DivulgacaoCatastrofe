@@ -53,35 +53,27 @@ public class Noticia {
         return visoes.toArray(new Noticia[visoes.size()]);
     }
     
-    public static Noticia buscarNoticias(Int sequencial) {
-        String sql = "SELECT * FROM Noticia WHERE sequencial = ?";
+    public static Noticia buscarNoticias(int sequencial) {
+        String sql = "SELECT * FROM Noticia WHERE Sequencial";
         ResultSet lista_resultados = null;
         Noticia noticia = null;
         try {
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
-            comando.setString(1, sequencial);
+            comando.setInt(1, sequencial);
             lista_resultados = comando.executeQuery();
             while (lista_resultados.next()) {
-                noticia = new Noticia(sequencial,
-                        lista_resultados.getString("Sequencial"),
-                        lista_resultados.getString("Endereco"),
-                        lista_resultados.getString("Estado"),
-                        lista_resultados.getString("País"),
-                        lista_resultados.getString("tipo").toCharArray()[0]);
+                GrauUrgencia grau_urgencia = null;
+                if (lista_resultados.getInt("GrauUrgencia") > -1) {
+                    grau_urgencia = GrauUrgencia.values()[lista_resultados.getInt("GrauUrgencia")];
+                }
+                noticia = new Noticia(sequencial, descricao,)
             }
-            lista_resultados.close();
-            comando.close();
-        } catch (SQLException exceção_sql) {
-            exceção_sql.printStackTrace();
-            agencia_noticia = null;
-        }
-        return agencia_noticia;
     }
     
     public static boolean existeNoticia(String chave_agencia_noticia, int chave_catastrofe){
         String sql = "SELECT sequencial FROM noticia WHRE AgenciaID = ? AND CatastrofeID = ?";
         ResultSet lista_resultados = null;
-        boolean existe = false;
+        Noticia noticia = null;
         try{
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
             comando.setString(1, chave_agencia_noticia);

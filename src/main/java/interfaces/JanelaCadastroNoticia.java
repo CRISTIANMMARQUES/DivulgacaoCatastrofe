@@ -179,7 +179,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         consultarNoticiaButton.setText("Consultar");
         consultarNoticiaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consultarNoticiaButtonActionPerformed(evt);
+                consultarNoticiaButton(evt);
             }
         });
         comandosPanel.add(consultarNoticiaButton);
@@ -292,9 +292,36 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void consultarNoticiaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarNoticiaButtonActionPerformed
+    private void consultarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarNoticiaButton
         // TODO add your handling code here:
-    }//GEN-LAST:event_consultarNoticiaButtonActionPerformed
+        Object selectedValue = noticias_cadastradasList.getSelectedValue();
+        String mensagem_erro = null;
+        Noticia noticia = null;
+        if (selectedValue instanceof Noticia) {
+            Noticia visao = (Noticia) selectedValue;
+            if (visao != null) {
+                noticia = Noticia.buscarNoticias(visao.getSequencial());
+                selecionarGrauUrgenciaRadioButton(noticia.getGrauUrgencia());
+                if (noticia == null) {
+                    mensagem_erro = "Noticia não cadastrada";
+                }
+            } else {
+                mensagem_erro = "Nenhuma noticia cadastrada";
+            }
+            if (mensagem_erro == null) {
+                agencias_cadastradasComboBox.setSelectedItem(getVisaoAgenciaCadastradaSelecionada(noticia));
+                catastrofes_cadastradasComboBox.setSelectedItem(getVisaoCatastrofeSelecionada(noticia));
+                String descricao = noticia.getDescricao();
+                if (descricao == null) {
+                    descricao = "";
+                }
+                dataHoraTextField.setText(Noticia.formatarDataHora(noticia.getDataHora().toString()));
+            } else {
+                informarErro(mensagem_erro);
+            }
+        }
+
+    }//GEN-LAST:event_consultarNoticiaButton
 
     private void alterarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarNoticiaButton
         // TODO add your handling code here:
