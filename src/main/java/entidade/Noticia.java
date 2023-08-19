@@ -125,7 +125,18 @@ public class Noticia {
         try{
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
             comando.setString(1, noticia.getDescricao());
-            comando.setString(2,);
+            comando.setString(2,noticia.getAgenciaNoticia().getCnpj());
+            comando.setInt(3, noticia.getCatastrofe().getSequencial());
+            int indice_grau_urgencia = -1;
+            if(noticia.getGrauUrgencia() != null) indice_grau_urgencia = noticia.getGrauUrgencia().ordinal();
+            comando.setInt(4, indice_grau_urgencia);
+            comando.setInt(5, noticia.getSequencial());
+            comando.executeUpdate();
+            comando.close();
+            return null;
+        }catch (SQLException excecao_sql){
+            excecao_sql.printStackTrace();
+            return "Erro na alteração da Noticia no BD";
         }
     }
 
