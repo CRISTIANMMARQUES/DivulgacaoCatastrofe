@@ -125,7 +125,7 @@ public class Noticia {
         try{
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
             comando.setString(1, noticia.getDescricao());
-            comando.setString(2, noticia);
+            comando.setString(2,);
         }
     }
 
