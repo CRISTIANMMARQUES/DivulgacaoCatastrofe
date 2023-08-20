@@ -3,6 +3,7 @@ package interfaces;
 
 import controle.ControladorCadastroAgenciaNoticia;
 import controle.ControladorCadastroCatastrofes;
+import controle.ControladorCadastroNoticias;
 import javax.swing.JOptionPane;
 import persistencia.BD;
 
@@ -57,7 +58,7 @@ public class JanelaDivulgacaoCatastrofes extends javax.swing.JFrame {
 
         divulgacao_catastrofesMenuBar.add(agenciaNoticiaMenu);
 
-        localizacaoMenu.setText("Localização");
+        localizacaoMenu.setText("Noticias");
 
         cadastro_localizacaoMenuItem.setText("Cadastrar");
         cadastro_localizacaoMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -103,7 +104,7 @@ public class JanelaDivulgacaoCatastrofes extends javax.swing.JFrame {
     }//GEN-LAST:event_terminarSistema
 
     private void cadastrarLocalizacao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarLocalizacao
-        informarServiçoIndisponível();
+        new ControladorCadastroNoticias();
     }//GEN-LAST:event_cadastrarLocalizacao
 
     private void pesquisarLocalizacao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarLocalizacao

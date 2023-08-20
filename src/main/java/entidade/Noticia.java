@@ -17,7 +17,7 @@ public class Noticia {
     private String descricao;
     private AgenciaNoticia agencia_id;
     private Catastrofe catastrofe_id;
-    private GrauUrgencia grau_urgencia;
+    private char grau_urgencia;
     private Timestamp data_hora;
     
     public Noticia(int sequencial, AgenciaNoticia agencia_id, Catastrofe catastrofe_id) {
@@ -26,7 +26,7 @@ public class Noticia {
         this.catastrofe_id = catastrofe_id;
     }
         
-    public Noticia(int sequencial, String descricao, AgenciaNoticia agencia_id, Catastrofe catastrofe_id, GrauUrgencia grau_urgencia, Timestamp data_hora){
+    public Noticia(int sequencial, String descricao, AgenciaNoticia agencia_id, Catastrofe catastrofe_id, char grau_urgencia, Timestamp data_hora){
         this.sequencial = sequencial;
         this.descricao = descricao;
         this.agencia_id = agencia_id;
@@ -54,7 +54,7 @@ public class Noticia {
     }
     
     public static Noticia buscarNoticias(int sequencial) {
-        String sql = "SELECT * FROM Noticia WHERE Sequencial";
+        String sql = "SELECT * FROM Noticia WHERE Sequencial = ?";
         ResultSet lista_resultados = null;
         Noticia noticia = null;
         try {
@@ -62,18 +62,30 @@ public class Noticia {
             comando.setInt(1, sequencial);
             lista_resultados = comando.executeQuery();
             while (lista_resultados.next()) {
-                GrauUrgencia grau_urgencia = null;
-                if (lista_resultados.getInt("GrauUrgencia") > -1) {
-                    grau_urgencia = GrauUrgencia.values()[lista_resultados.getInt("GrauUrgencia")];
-                }
-                noticia = new Noticia(sequencial, descricao,)
+//                GrauUrgencia grau_urgencia = null;
+//                if (lista_resultados.getInt("GrauUrgencia") > -1) {
+//                    grau_urgencia = GrauUrgencia.values()[lista_resultados.getInt("GrauUrgencia")];
+//                }
+                noticia = new Noticia(sequencial, 
+                          lista_resultados.getString("Descricao"),
+                         AgenciaNoticia.buscarAgenciaNoticia(lista_resultados.getString("AgenciaID")),
+                       Catastrofe.buscarCatastrofe(lista_resultados.getInt("CatastrofeID")),
+                                  lista_resultados.getString("GrauUrgencia").toCharArray()[0],
+                          lista_resultados.getTimestamp("DataHora"));
             }
+            lista_resultados.close();
+            comando.close();
+        }catch(SQLException exceção_sql){
+            exceção_sql.printStackTrace();
+            noticia = null;
+        }
+        return noticia;
     }
     
     public static boolean existeNoticia(String chave_agencia_noticia, int chave_catastrofe){
         String sql = "SELECT sequencial FROM noticia WHRE AgenciaID = ? AND CatastrofeID = ?";
         ResultSet lista_resultados = null;
-        Noticia noticia = null;
+        boolean existe = false;
         try{
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
             comando.setString(1, chave_agencia_noticia);
@@ -97,11 +109,12 @@ public class Noticia {
             comando.setString(1, noticia.getDescricao());
             comando.setString(2, noticia.getAgenciaNoticia().getCnpj());
             comando.setInt(3, noticia.getCatastrofe().getSequencial());
-            int indice_grau_urgencia = -1;
-            if(noticia.getGrauUrgencia() != null){
-                indice_grau_urgencia = noticia.getGrauUrgencia().ordinal();
-            }
-            comando.setInt(4, indice_grau_urgencia);
+            comando.setString(4, (noticia.getGrauUrgencia()+""));
+//            int indice_grau_urgencia = -1;
+//            if(noticia.getGrauUrgencia() != null){
+//                indice_grau_urgencia = noticia.getGrauUrgencia().ordinal();
+//            }
+//            comando.setInt(4, indice_grau_urgencia);
             comando.setTimestamp(5, noticia.getDataHora());
             comando.executeUpdate();
             comando.close();
@@ -119,9 +132,10 @@ public class Noticia {
             comando.setString(1, noticia.getDescricao());
             comando.setString(2,noticia.getAgenciaNoticia().getCnpj());
             comando.setInt(3, noticia.getCatastrofe().getSequencial());
-            int indice_grau_urgencia = -1;
-            if(noticia.getGrauUrgencia() != null) indice_grau_urgencia = noticia.getGrauUrgencia().ordinal();
-            comando.setInt(4, indice_grau_urgencia);
+            comando.setString(4, (noticia.getGrauUrgencia()+""));
+//            int indice_grau_urgencia = -1;
+//            if(noticia.getGrauUrgencia() != null) indice_grau_urgencia = noticia.getGrauUrgencia().ordinal();
+//            comando.setInt(4, indice_grau_urgencia);
             comando.setInt(5, noticia.getSequencial());
             comando.executeUpdate();
             comando.close();
@@ -130,6 +144,70 @@ public class Noticia {
             excecao_sql.printStackTrace();
             return "Erro na alteração da Noticia no BD";
         }
+    }
+    
+    public static boolean existeNoticia(int sequencial){
+        String sql = "SELECT COUNT(sequencial) FROM Noticia WHERE Sequencial = ?";
+        ResultSet lista_resultados = null;
+        boolean existe = false;
+        try{
+            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            comando.setInt(1, sequencial);
+            lista_resultados = comando.executeQuery();
+            while(lista_resultados.next()){
+                existe = true;
+            }
+            lista_resultados.close();
+            comando.close();
+        }catch(SQLException excecao_sql){
+            excecao_sql.printStackTrace();
+        }
+        return existe;
+    }
+    
+    public static String removerNoticia(int Sequencial) {
+        String sql = "DELETE FROM noticia WHERE sequencial = ?";
+        try {
+            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            comando.setInt(1, Sequencial);
+            comando.executeUpdate();
+            comando.close();
+            return null;
+        } catch (SQLException exceção_sql) {
+            exceção_sql.printStackTrace();
+            return "Erro na remoção da Noticia no BD";
+        }
+    }
+    
+    public static String formatarDataHora(String data_hora_bd) {
+        String[] data_hora = data_hora_bd.split(" ");
+        String[] ano_mes_dia = data_hora[0].split("-");
+        String[] hora_minuto_resto = data_hora[1].split(":");
+        String data_hora_formatada = ano_mes_dia[2] + "/" + ano_mes_dia[1] + "/" + ano_mes_dia[0] + " "
+                + hora_minuto_resto[0] + ":" + hora_minuto_resto[1] + "hs";
+        return data_hora_formatada;
+    }
+    
+    public static int ultimoSequencial() {
+        String sql = "SELECT MAX(sequencial) FROM noticia";
+        ResultSet lista_resultados = null;
+        int sequencial = 0;
+        try {
+            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            lista_resultados = comando.executeQuery();
+            while (lista_resultados.next()) {
+                sequencial = lista_resultados.getInt(1);
+            }
+            lista_resultados.close();
+            comando.close();
+        } catch (SQLException exceção_sql) {
+            exceção_sql.printStackTrace();
+        }
+        return sequencial;
+    }
+    
+    public Noticia getVisao() {
+        return new Noticia(sequencial, agencia_id, catastrofe_id);
     }
 
     public int getSequencial() {
@@ -140,20 +218,12 @@ public class Noticia {
         this.sequencial = sequencial;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
     public AgenciaNoticia getAgenciaNoticia() {
-        return agencia_noticia;
+        return agencia_id;
     }
 
     public void setAgenciaNoticia(AgenciaNoticia agencia_noticia) {
-        this.agencia_noticia = agencia_noticia;
+        this.agencia_id = agencia_id;
     }
 
     public Catastrofe getCatastrofe() {
@@ -164,11 +234,11 @@ public class Noticia {
         this.catastrofe_id = catastrofe_id;
     }
 
-    public GrauUrgencia getGrauUrgencia() {
+    public char getGrauUrgencia() {
         return grau_urgencia;
     }
 
-    public void setGrauUrgencia(GrauUrgencia grau_urgencia) {
+    public void setGrauUrgencia(char grau_urgencia) {
         this.grau_urgencia = grau_urgencia;
     }
 

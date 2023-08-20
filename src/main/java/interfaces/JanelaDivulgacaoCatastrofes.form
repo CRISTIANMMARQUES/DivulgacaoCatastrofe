@@ -36,7 +36,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="localizacaoMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Localiza&#xe7;&#xe3;o"/>
+            <Property name="text" type="java.lang.String" value="Noticias"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="cadastro_localizacaoMenuItem">
