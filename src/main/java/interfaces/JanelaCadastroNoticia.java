@@ -117,12 +117,12 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     private AgenciaNoticia getVisaoAgenciaNoticiaSelecionada(Noticia noticia) {
         // Lógica para obter a visão de agência de notícia selecionada com base na notícia
         AgenciaNoticia[] visoesAgencia = AgenciaNoticia.getVisoes();
-
+       
         // Aqui você deve percorrer as visões para encontrar a correspondente à agência de notícia da notícia
         for (AgenciaNoticia visaoAgencia : visoesAgencia) {
             // Suponhamos que a notícia tenha uma referência para a agência de notícia associada:
             if (noticia.getAgenciaNoticia().getCnpj().equals(visaoAgencia.getCnpj())) {
-                System.out.println(visaoAgencia);
+                
                 return visaoAgencia;
             }
         }
@@ -138,7 +138,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         for (Catastrofe visaoCatastrofe : visoesCatastrofe) {
             // Suponhamos que a notícia tenha uma referência para a agência de notícia associada:
             if (noticia.getCatastrofe().getSequencial().equals(visaoCatastrofe.getSequencial())){
-                System.out.println(visaoCatastrofe);
+                
                 return visaoCatastrofe;
             }
         }
@@ -198,6 +198,11 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         catastrofesLabel.setText("Catastrofes");
 
         agencias_cadastradasComboBox.setModel(new DefaultComboBoxModel(agencias_cadastradas));
+        agencias_cadastradasComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                agencias_cadastradasComboBoxItemStateChanged(evt);
+            }
+        });
 
         catastrofes_cadastradasComboBox.setModel(new DefaultComboBoxModel(Catastrofe.getVisoes()));
 
@@ -393,7 +398,8 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
                 sequencialTextField.setText(visao.getSequencial() + "");
                 agencias_cadastradasComboBox.setSelectedItem(getVisaoAgenciaNoticiaSelecionada(noticia));
                 
-                catastrofes_cadastradasComboBox.setSelectedItem(getVisaoCatastrofeSelecionada(noticia));
+                catastrofes_cadastradasComboBox.setSelectedItem(0);
+                //catastrofes_cadastradasComboBox.setSelectedItem(getVisaoCatastrofeSelecionada(noticia).getSequencial());
                 String descricao = noticia.getDescricao();
                 if (descricao == null) {
                     descricao = "";
@@ -466,6 +472,11 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         // TODO add your handling code here:
         limparCampos();
     }//GEN-LAST:event_limparCamposButtonActionPerformed
+
+    private void agencias_cadastradasComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_agencias_cadastradasComboBoxItemStateChanged
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_agencias_cadastradasComboBoxItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel agencia_noticiaLabel;
