@@ -3,7 +3,7 @@ CREATE TABLE noticia(
     Descricao VARCHAR(150),
     AgenciaID VARCHAR(50) NOT NULL,
     CatastrofeID INT NOT NULL,
-    GrauUrgencia INT NOT NULL,
+    GrauUrgencia CHAR NOT NULL,
     DataHora TIMESTAMP NOT NULL,
     FOREIGN KEY (AgenciaID) REFERENCES Agencia(cnpj),
     FOREIGN KEY (CatastrofeID) REFERENCES Catastrofe(sequencial));

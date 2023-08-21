@@ -10,7 +10,7 @@ public class ControladorCadastroNoticias {
     public String inserirNoticia(Noticia noticia){
         if(!Noticia.existeNoticia(noticia.getAgenciaNoticia().getCnpj(), noticia.getCatastrofe().getSequencial())){
             return Noticia.inserirNoticia(noticia);
-        }else return "Noticia já cadastrada";
+        }else return Noticia.inserirNoticia(noticia);
     }
     public String alterarNoticia(Noticia noticia_informada){
         Noticia noticias_cadastradas = Noticia.buscarNoticias(noticia_informada.getSequencial());

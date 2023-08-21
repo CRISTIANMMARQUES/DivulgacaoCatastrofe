@@ -5,7 +5,6 @@ import controle.ControladorCadastroNoticias;
 import entidade.AgenciaNoticia;
 import entidade.Catastrofe;
 import entidade.Noticia;
-import entidade.Noticia.GrauUrgencia;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
@@ -31,8 +30,8 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     
     private void inicializarListaNoticias() {
         modelo_lista_noticia = (DefaultListModel)noticias_cadastradasList.getModel();
-        AgenciaNoticia[] visoes = AgenciaNoticia.getVisoes();
-        for (AgenciaNoticia visao : visoes) {
+        Noticia[] visoes = Noticia.getVisoes();
+        for (Noticia visao : visoes) {
             modelo_lista_noticia.addElement(visao);
         }
     }
@@ -112,6 +111,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         agencias_cadastradasComboBox.setSelectedIndex(-1);
         catastrofes_cadastradasComboBox.setSelectedIndex(-1);
         grau_urgenciabuttonGroup.clearSelection();
+        dataHoraTextField.setText("");
     }
     
     private AgenciaNoticia getVisaoAgenciaNoticiaSelecionada(Noticia noticia) {
@@ -143,11 +143,10 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
 
         return null; // Caso não seja encontrada uma correspondência
     }
-        
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         grau_urgenciabuttonGroup = new javax.swing.ButtonGroup();
         noticias_cadastradasLabel = new javax.swing.JLabel();
@@ -157,7 +156,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         sequencialTextField = new javax.swing.JTextField();
         agencia_noticiaLabel = new javax.swing.JLabel();
         catastrofesLabel = new javax.swing.JLabel();
-        agencias_cadastradasComboBox = new javax.swing.JComboBox();
+        agencias_cadastradasComboBox = new javax.swing.JComboBox<>();
         catastrofes_cadastradasComboBox = new javax.swing.JComboBox<>();
         grau_urgenciaLabel = new javax.swing.JLabel();
         urgenteRadioButton = new javax.swing.JRadioButton();
@@ -178,147 +177,43 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Notícia");
         setMaximumSize(null);
-        setMinimumSize(null);
         setPreferredSize(new java.awt.Dimension(700, 700));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         noticias_cadastradasLabel.setText("Notícias Cadastradas");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(88, 12, 0, 0);
-        getContentPane().add(noticias_cadastradasLabel, gridBagConstraints);
 
         noticias_cadastradasList.setModel(new DefaultListModel ());
         noticias_cadastradasScrollPane.setViewportView(noticias_cadastradasList);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 19;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 402;
-        gridBagConstraints.ipady = 115;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 6, 0, 64);
-        getContentPane().add(noticias_cadastradasScrollPane, gridBagConstraints);
-
         sequencialLabel.setText("Notícia");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(30, 12, 0, 0);
-        getContentPane().add(sequencialLabel, gridBagConstraints);
 
         sequencialTextField.setEditable(false);
-        sequencialTextField.setColumns(1000);
         sequencialTextField.setMaximumSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(27, 8, 0, 0);
-        getContentPane().add(sequencialTextField, gridBagConstraints);
+        sequencialTextField.setName(""); // NOI18N
+        sequencialTextField.setPreferredSize(new java.awt.Dimension(110, 22));
 
         agencia_noticiaLabel.setText("Agencia de Notícia");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 12, 0, 0);
-        getContentPane().add(agencia_noticiaLabel, gridBagConstraints);
 
         catastrofesLabel.setText("Catastrofes");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.ipadx = 41;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(21, 12, 0, 0);
-        getContentPane().add(catastrofesLabel, gridBagConstraints);
 
-        agencias_cadastradasComboBox.setModel(new DefaultComboBoxModel(AgenciaNoticia.getVisoes()));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 12;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 143;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 8, 0, 0);
-        getContentPane().add(agencias_cadastradasComboBox, gridBagConstraints);
+        agencias_cadastradasComboBox.setModel(new DefaultComboBoxModel(agencias_cadastradas));
 
         catastrofes_cadastradasComboBox.setModel(new DefaultComboBoxModel(Catastrofe.getVisoes()));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 11;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 141;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 8, 0, 0);
-        getContentPane().add(catastrofes_cadastradasComboBox, gridBagConstraints);
 
         grau_urgenciaLabel.setText("Grau de Urgencia");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(23, 12, 0, 0);
-        getContentPane().add(grau_urgenciaLabel, gridBagConstraints);
 
         grau_urgenciabuttonGroup.add(urgenteRadioButton);
         urgenteRadioButton.setMnemonic('U');
         urgenteRadioButton.setText("Urgente");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 9;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 0);
-        getContentPane().add(urgenteRadioButton, gridBagConstraints);
 
         grau_urgenciabuttonGroup.add(medioRadioButton);
         medioRadioButton.setMnemonic('M');
         medioRadioButton.setText("Medio");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 8, 0, 0);
-        getContentPane().add(medioRadioButton, gridBagConstraints);
 
         grau_urgenciabuttonGroup.add(baixoRadioButton);
         baixoRadioButton.setMnemonic('B');
         baixoRadioButton.setText("Baixo");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 8, 0, 0);
-        getContentPane().add(baixoRadioButton, gridBagConstraints);
 
         descricaoLabel.setText("Descrição");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 40;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(57, 12, 0, 0);
-        getContentPane().add(descricaoLabel, gridBagConstraints);
 
         descricaoTextArea.setColumns(20);
         descricaoTextArea.setRows(5);
@@ -328,39 +223,9 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         descricaoScrollPane.setViewportView(descricaoTextArea);
         descricaoTextArea.getAccessibleContext().setAccessibleName("");
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 19;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 400;
-        gridBagConstraints.ipady = 101;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(18, 8, 0, 64);
-        getContentPane().add(descricaoScrollPane, gridBagConstraints);
-
         dataHoraLabel.setText("Registrado em");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(32, 12, 0, 0);
-        getContentPane().add(dataHoraLabel, gridBagConstraints);
 
         dataHoraTextField.setEditable(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 123;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(29, 8, 0, 0);
-        getContentPane().add(dataHoraTextField, gridBagConstraints);
 
         inserirNoticiaButton.setText("Inserir");
         inserirNoticiaButton.addActionListener(new java.awt.event.ActionListener() {
@@ -395,16 +260,113 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         comandosPanel.add(alterarNoticiaButton);
 
         limparCamposButton.setText("Limpar");
+        limparCamposButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limparCamposButtonActionPerformed(evt);
+            }
+        });
         comandosPanel.add(limparCamposButton);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 13;
-        gridBagConstraints.gridwidth = 18;
-        gridBagConstraints.ipadx = 124;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 6, 38, 0);
-        getContentPane().add(comandosPanel, gridBagConstraints);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(noticias_cadastradasLabel)
+                        .addGap(6, 6, 6)
+                        .addComponent(noticias_cadastradasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(sequencialLabel)
+                        .addGap(80, 80, 80)
+                        .addComponent(sequencialTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(agencia_noticiaLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(agencias_cadastradasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(catastrofesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(catastrofes_cadastradasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(grau_urgenciaLabel)
+                        .addGap(27, 27, 27)
+                        .addComponent(baixoRadioButton)
+                        .addGap(8, 8, 8)
+                        .addComponent(medioRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(urgenteRadioButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(descricaoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(descricaoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(dataHoraLabel)
+                        .addGap(42, 42, 42)
+                        .addComponent(dataHoraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(comandosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(64, 64, 64))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(noticias_cadastradasLabel))
+                    .addComponent(noticias_cadastradasScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(sequencialLabel))
+                    .addComponent(sequencialTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(agencia_noticiaLabel))
+                    .addComponent(agencias_cadastradasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(catastrofesLabel))
+                    .addComponent(catastrofes_cadastradasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(grau_urgenciaLabel))
+                    .addComponent(baixoRadioButton)
+                    .addComponent(medioRadioButton)
+                    .addComponent(urgenteRadioButton))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(descricaoLabel))
+                    .addComponent(descricaoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(dataHoraLabel))
+                    .addComponent(dataHoraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(comandosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -426,11 +388,14 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
                 mensagem_erro = "Nenhuma noticia cadastrada";
             }
             if (mensagem_erro == null) {
+                sequencialTextField.setText(visao.getSequencial() + "");
                 agencias_cadastradasComboBox.setSelectedItem(getVisaoAgenciaNoticiaSelecionada(noticia));
                 catastrofes_cadastradasComboBox.setSelectedItem(getVisaoCatastrofeSelecionada(noticia));
                 String descricao = noticia.getDescricao();
                 if (descricao == null) {
                     descricao = "";
+                }else{
+                    descricaoTextArea.setText(noticia.getDescricao());
                 }
                 dataHoraTextField.setText(Noticia.formatarDataHora(noticia.getDataHora().toString()));
             } else {
@@ -468,12 +433,40 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
 
     private void removerNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerNoticiaButton
         // TODO add your handling code here:
-        
+        Object selectedValue = noticias_cadastradasList.getSelectedValue();
+        String mensagem_erro = null;
+        Noticia noticia = null;
+        if (selectedValue instanceof Noticia) {
+            Noticia visao = (Noticia) selectedValue;
+            if (visao != null) {
+                noticia = Noticia.buscarNoticias(visao.getSequencial());
+                mensagem_erro = controlador.removerNoticia(noticia.getSequencial());
+                if (noticia == null) {
+                    mensagem_erro = "Noticia não cadastrado";
+                }
+            } else {
+                mensagem_erro = "Nenhuma Noticia selecionada";
+            }
+            if (mensagem_erro == null) {
+                modelo_lista_noticia.removeElement(visao);
+                limparCampos();
+            } else {
+                informarErro(mensagem_erro);
+            }
+        } else {
+            mensagem_erro = "Selected Value não é uma instancia de Noticia";
+            informarErro(mensagem_erro);
+        }
     }//GEN-LAST:event_removerNoticiaButton
+
+    private void limparCamposButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparCamposButtonActionPerformed
+        // TODO add your handling code here:
+        limparCampos();
+    }//GEN-LAST:event_limparCamposButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel agencia_noticiaLabel;
-    private javax.swing.JComboBox agencias_cadastradasComboBox;
+    private javax.swing.JComboBox<String> agencias_cadastradasComboBox;
     private javax.swing.JButton alterarNoticiaButton;
     private javax.swing.JRadioButton baixoRadioButton;
     private javax.swing.JLabel catastrofesLabel;

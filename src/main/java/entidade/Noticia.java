@@ -83,7 +83,7 @@ public class Noticia {
     }
     
     public static boolean existeNoticia(String chave_agencia_noticia, int chave_catastrofe){
-        String sql = "SELECT sequencial FROM noticia WHRE AgenciaID = ? AND CatastrofeID = ?";
+        String sql = "SELECT Sequencial FROM Noticia WHERE AgenciaID = ? AND CatastrofeID = ?";
         ResultSet lista_resultados = null;
         boolean existe = false;
         try{
@@ -204,6 +204,12 @@ public class Noticia {
             exceção_sql.printStackTrace();
         }
         return sequencial;
+    }
+    
+    public String toString() {
+//        AgenciaNoticia agencia_cadastrada = AgenciaNoticia.getVisoes();
+//        Catastrofe catastrofe_cadastrada = Catastrofe.getVisoes();
+        return "[" + sequencial + "]" +catastrofe_id.getNome()+ " -- " +agencia_id.getNome();
     }
     
     public Noticia getVisao() {

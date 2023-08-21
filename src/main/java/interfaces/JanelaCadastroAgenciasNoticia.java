@@ -326,7 +326,7 @@ public class JanelaCadastroAgenciasNoticia extends javax.swing.JFrame {
         AgenciaNoticia agenciaNoticia = obterAgenciaNoticiaInformada();
         String mensagem_erro = null;
         if(agenciaNoticia != null) mensagem_erro = controlador.inserirAgenciaNoticia(agenciaNoticia);
-        else mensagem_erro = "Algum atributo da Catastrofe não foi informado";
+        else mensagem_erro = "Algum atributo da Agencia não foi informado";
         if (mensagem_erro == null){
             String cnpj = agenciaNoticia.getCnpj();
             agenciaNoticia.setCnpj(cnpj);
