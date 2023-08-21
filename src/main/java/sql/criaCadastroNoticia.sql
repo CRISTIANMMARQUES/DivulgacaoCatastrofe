@@ -1,3 +1,5 @@
+drop table if exists noticia;
+
 CREATE TABLE noticia(
     Sequencial INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Descricao VARCHAR(150),

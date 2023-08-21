@@ -122,6 +122,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         for (AgenciaNoticia visaoAgencia : visoesAgencia) {
             // Suponhamos que a notícia tenha uma referência para a agência de notícia associada:
             if (noticia.getAgenciaNoticia().getCnpj().equals(visaoAgencia.getCnpj())) {
+                System.out.println(visaoAgencia);
                 return visaoAgencia;
             }
         }
@@ -137,6 +138,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         for (Catastrofe visaoCatastrofe : visoesCatastrofe) {
             // Suponhamos que a notícia tenha uma referência para a agência de notícia associada:
             if (noticia.getCatastrofe().getSequencial().equals(visaoCatastrofe.getSequencial())){
+                System.out.println(visaoCatastrofe);
                 return visaoCatastrofe;
             }
         }
@@ -390,6 +392,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
             if (mensagem_erro == null) {
                 sequencialTextField.setText(visao.getSequencial() + "");
                 agencias_cadastradasComboBox.setSelectedItem(getVisaoAgenciaNoticiaSelecionada(noticia));
+                
                 catastrofes_cadastradasComboBox.setSelectedItem(getVisaoCatastrofeSelecionada(noticia));
                 String descricao = noticia.getDescricao();
                 if (descricao == null) {
