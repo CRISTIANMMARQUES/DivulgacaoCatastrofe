@@ -114,16 +114,11 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         dataHoraTextField.setText("");
     }
     
-    private Noticia getVisaoAgenciaNoticiaSelecionada(Noticia noticia) {
-        // Lógica para obter a visão de agência de notícia selecionada com base na notícia
-        Noticia[] visoes = Noticia.getVisoes();
-       
-        // Aqui você deve percorrer as visões para encontrar a correspondente à agência de notícia da notícia
-        for (Noticia visao : visoes) {
-            // Suponhamos que a notícia tenha uma referência para a agência de notícia associada:
-            if (noticia.getAgenciaNoticia().getCnpj().equals(visao.getAgenciaNoticia().getCnpj())) {
-                
-                return visao;
+    private AgenciaNoticia getVisaoAgenciaNoticiaSelecionada(Noticia noticia) {
+        String chave_agencia_noticia = noticia.getAgenciaNoticia().getCnpj();
+        for (AgenciaNoticia visao_agencia_noticia : agencias_cadastradas) {
+            if (visao_agencia_noticia.getCnpj().equals(chave_agencia_noticia)){
+                return visao_agencia_noticia;
             }
         }
 
@@ -131,15 +126,13 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     }
     
     private Catastrofe getVisaoCatastrofeSelecionada(Noticia noticia) {
-        // Lógica para obter a visão de agência de notícia selecionada com base na notícia
-        Catastrofe[] visoesCatastrofe = Catastrofe.getVisoes();
-
-        // Aqui você deve percorrer as visões para encontrar a correspondente à agência de notícia da notícia
-        for (Catastrofe visaoCatastrofe : visoesCatastrofe) {
-            // Suponhamos que a notícia tenha uma referência para a agência de notícia associada:
-            if (noticia.getCatastrofe().getSequencial().equals(visaoCatastrofe.getSequencial())){
-                
-                return visaoCatastrofe;
+        Integer chave_catastrofe = noticia.getCatastrofe().getSequencial();
+        System.out.println("Sequencial"+chave_catastrofe);
+        for (Catastrofe visao_catastrofe : catastrofes_cadastradas) {
+            if (visao_catastrofe.getSequencial() == chave_catastrofe){
+                    //equals(chave_catastrofe)){
+                //System.out.println(visao_catastrofe);
+                return visao_catastrofe;
             }
         }
 
@@ -204,7 +197,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
             }
         });
 
-        catastrofes_cadastradasComboBox.setModel(new DefaultComboBoxModel(Catastrofe.getVisoes()));
+        catastrofes_cadastradasComboBox.setModel(new DefaultComboBoxModel(catastrofes_cadastradas));
 
         grau_urgenciaLabel.setText("Grau de Urgencia");
 
@@ -292,16 +285,6 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
                         .addComponent(sequencialTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(agencia_noticiaLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(agencias_cadastradasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(catastrofesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(catastrofes_cadastradasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addComponent(grau_urgenciaLabel)
                         .addGap(27, 27, 27)
                         .addComponent(baixoRadioButton)
@@ -321,7 +304,18 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
                         .addComponent(dataHoraTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(comandosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(comandosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(agencia_noticiaLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(agencias_cadastradasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(catastrofesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(catastrofes_cadastradasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(64, 64, 64))
         );
         layout.setVerticalGroup(
@@ -379,7 +373,6 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void consultarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarNoticiaButton
-        // TODO add your handling code here:
         Object selectedValue = noticias_cadastradasList.getSelectedValue();
         String mensagem_erro = null;
         Noticia noticia = null;
@@ -397,9 +390,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
             if (mensagem_erro == null) {
                 sequencialTextField.setText(visao.getSequencial() + "");
                 agencias_cadastradasComboBox.setSelectedItem(getVisaoAgenciaNoticiaSelecionada(noticia));
-                
-                catastrofes_cadastradasComboBox.setSelectedItem(0);
-                //catastrofes_cadastradasComboBox.setSelectedItem(getVisaoCatastrofeSelecionada(noticia).getSequencial());
+                catastrofes_cadastradasComboBox.setSelectedItem(getVisaoCatastrofeSelecionada(noticia));
                 String descricao = noticia.getDescricao();
                 if (descricao == null) {
                     descricao = "";
