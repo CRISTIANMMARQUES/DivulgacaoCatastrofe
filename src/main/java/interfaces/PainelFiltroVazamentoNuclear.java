@@ -9,7 +9,7 @@ public class PainelFiltroVazamentoNuclear extends javax.swing.JPanel {
         initComponents();
     }
     
-    public VazamentoNuclear.TipoVazamentoNuclear getSelectedTipoQueimada() {
+    public VazamentoNuclear.TipoVazamentoNuclear getSelectedTipoVazamentoNuclear() {
         VazamentoNuclear.TipoVazamentoNuclear tipo_vazamento_nuclear = null;
         if (tipo_vazamento_nuclearbuttonGroup.getSelection() != null) {
             tipo_vazamento_nuclear = VazamentoNuclear.TipoVazamentoNuclear.values()

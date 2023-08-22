@@ -15,6 +15,13 @@ public class Inundacao extends Catastrofe {
         this.descricao = descricao;
         this.ativo = ativo;
     }
+    
+    public String toStringFull() {
+        String str = super.toStringFull() + " - " +tipo_inundacao;
+        if(descricao != null) str += " -Descrição [" +descricao+ "]";
+        if (ativo) str += "Inundação";
+        return str;
+    }
 
     public TipoInundacao getTipoInundacao() {
         return tipo_inundacao;

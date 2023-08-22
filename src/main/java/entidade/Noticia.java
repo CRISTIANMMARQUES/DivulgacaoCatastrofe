@@ -1,6 +1,8 @@
 
 package entidade;
 
+import entidade.Queimada.TipoQueimada;
+import entidade.VazamentoNuclear.TipoVazamentoNuclear;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -207,11 +209,19 @@ public class Noticia {
     }
     
     public String toString() {
-//        AgenciaNoticia agencia_cadastrada = AgenciaNoticia.getVisoes();
-//        Catastrofe catastrofe_cadastrada = Catastrofe.getVisoes();
         return "[" + sequencial + "]" +catastrofe_id.getNome()+ " -- " +agencia_id.getNome();
     }
     
+    public String toStringFull(){
+        String str = agencia_id.toStringFull() + " --- " + catastrofe_id.toStringFull() + "\n          ";
+        str += "Grau Urgencia [" +grau_urgencia+ "] - " + formatarDataHora(data_hora.toString());
+        return str;
+    }
+    
+    public static ArrayList<Noticia> pesquisarNoticia(String chave_agencia_noticia, Integer chave_catastrofe, char grau_urgencia, char inundacao_ativa, TipoQueimada tipo_queimada, 
+            TipoVazamentoNuclear tipo_vazamento_nuclear, Timestamp data_minima){
+        String sql = "SELECT A.Cnpj, "        
+    }
     public Noticia getVisao() {
         return new Noticia(sequencial, agencia_id, catastrofe_id);
     }

@@ -346,6 +346,13 @@ public class Catastrofe {
         return visoes.toArray(new Catastrofe[visoes.size()]);
     }
     
+    public String toStringFull(){
+        String str = nome;
+        if(localizacao != null) str += " [" +localizacao+ "] ";
+        if(data != null) str += " [" +data+ "] ";
+        return str;
+    }
+    
     public Catastrofe getVisao() {
         return new Catastrofe(sequencial, nome);
     }

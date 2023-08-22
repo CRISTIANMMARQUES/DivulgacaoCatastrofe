@@ -128,6 +128,10 @@ public class AgenciaNoticia {
         return visoes.toArray(new AgenciaNoticia[visoes.size()]);
     }
     
+    public String toStringFull(){
+        return cnpj+ " - " +nome+ " - " +endereco+ " - " +país+ " - " +tipo_agencia_noticia+ " - ";
+    }
+    
     public AgenciaNoticia getVisao() {
         return new AgenciaNoticia(cnpj, nome);
     }

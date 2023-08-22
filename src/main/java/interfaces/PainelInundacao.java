@@ -43,7 +43,7 @@ public class PainelInundacao extends javax.swing.JPanel {
     public void setSelectedTipoInundacao(TipoInundacao tipo_inundacao){
         grauComboBox.setSelectedItem(tipo_inundacao);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

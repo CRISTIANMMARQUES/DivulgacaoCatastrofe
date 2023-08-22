@@ -3,7 +3,12 @@ package interfaces;
 
 import entidade.AgenciaNoticia;
 import entidade.Catastrofe;
+import entidade.Noticia;
+import entidade.Queimada.TipoQueimada;
+import entidade.VazamentoNuclear.TipoVazamentoNuclear;
 import interfaces.PainelFiltroInundacao;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class JanelaPesquisaNoticias extends javax.swing.JFrame {
     
@@ -24,6 +29,32 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         filtro_noticiasTabbedPane.addTab("Filtro de Vazamento Nuclear", filtro_vazamento_nuclearPainel);
 //        limparFiltros(null);
     }
+    
+    private Timestamp getDataMinima(){
+        Timestamp data_minima = null;
+        String data_minima_str = data_minima_noticiaTextField.getText();
+        if(!data_minima_str.isEmpty()){
+            String[] data_minima_partes = data_minima_str.toString().split("/");
+            String dia = data_minima_partes[0];
+            String mes = data_minima_partes[1];
+            String ano = data_minima_partes[2];
+            if((dia.length() == 2) && (mes.length() == 2) && (ano.length() == 4)){
+                data_minima_str = ano + "-" + mes + "-" + dia + "00:00:00";
+                data_minima = Timestamp.valueOf(data_minima_str);
+            }
+        }
+        return data_minima;
+    }
+    
+    private void mostrarNoticiasSelecionadas(ArrayList<Noticia> noticias){
+        boolean primeira_noticia = true;
+        for(Noticia noticia: noticias){
+            if(primeira_noticia){
+                pesquisasTextArea.append(noticia.toStringFull());
+                primeira_noticia = false;
+            }else pesquisasTextArea.append(noticia.toStringFull());
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -33,6 +64,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         comandosPanel = new javax.swing.JPanel();
         limpar_FiltrosButton = new javax.swing.JButton();
         limpar_noticias_selecionadasButton = new javax.swing.JButton();
+        pesquisarNoticiaButton = new javax.swing.JButton();
         filtro_noticiasTabbedPane = new javax.swing.JTabbedPane();
         filtro_catastrofePanel = new javax.swing.JPanel();
         catastrofes_cadastradasComboBox = new javax.swing.JComboBox<>();
@@ -40,14 +72,16 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         filtro_agencias_noticiasPanel = new javax.swing.JPanel();
         agencia_noticiasLabel = new javax.swing.JLabel();
         agencia_noticiasComboBox = new javax.swing.JComboBox<>();
+        filtroNoticiasPanel = new javax.swing.JPanel();
+        grau_urgenciaLabel = new javax.swing.JLabel();
+        baixoRadioButton = new javax.swing.JRadioButton();
+        medioRadioButton = new javax.swing.JRadioButton();
+        urgenteRadioButton = new javax.swing.JRadioButton();
+        avaliacoesSelecionadasPanel = new javax.swing.JPanel();
         ScrollPane = new javax.swing.JScrollPane();
         pesquisasTextArea = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        baixoRadioButton = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jPanel2 = new javax.swing.JPanel();
+        data_minimaLabel = new javax.swing.JLabel();
+        data_minima_noticiaTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,12 +99,21 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
             }
         });
 
+        pesquisarNoticiaButton.setText("Pesquisar");
+        pesquisarNoticiaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesquisarNoticiaButton(evt);
+            }
+        });
+
         javax.swing.GroupLayout comandosPanelLayout = new javax.swing.GroupLayout(comandosPanel);
         comandosPanel.setLayout(comandosPanelLayout);
         comandosPanelLayout.setHorizontalGroup(
             comandosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(comandosPanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
+                .addComponent(pesquisarNoticiaButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(limpar_FiltrosButton)
                 .addGap(18, 18, 18)
                 .addComponent(limpar_noticias_selecionadasButton)
@@ -82,7 +125,8 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(comandosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(limpar_FiltrosButton)
-                    .addComponent(limpar_noticias_selecionadasButton))
+                    .addComponent(limpar_noticias_selecionadasButton)
+                    .addComponent(pesquisarNoticiaButton))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -141,80 +185,98 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        pesquisasTextArea.setColumns(20);
-        pesquisasTextArea.setRows(5);
-        ScrollPane.setViewportView(pesquisasTextArea);
+        filtroNoticiasPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro Noticia"));
+        filtroNoticiasPanel.setToolTipText("Teste");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro Noticia"));
-        jPanel1.setToolTipText("Teste");
-
-        jLabel1.setText("Grau Urgencia");
+        grau_urgenciaLabel.setText("Grau Urgencia");
 
         grau_urgenciabuttonGroup.add(baixoRadioButton);
         baixoRadioButton.setText("Baixo");
 
-        grau_urgenciabuttonGroup.add(jRadioButton2);
-        jRadioButton2.setText("Medio");
+        grau_urgenciabuttonGroup.add(medioRadioButton);
+        medioRadioButton.setText("Medio");
 
-        grau_urgenciabuttonGroup.add(jRadioButton3);
-        jRadioButton3.setText("Urgente");
+        grau_urgenciabuttonGroup.add(urgenteRadioButton);
+        urgenteRadioButton.setText("Urgente");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout filtroNoticiasPanelLayout = new javax.swing.GroupLayout(filtroNoticiasPanel);
+        filtroNoticiasPanel.setLayout(filtroNoticiasPanelLayout);
+        filtroNoticiasPanelLayout.setHorizontalGroup(
+            filtroNoticiasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(filtroNoticiasPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(grau_urgenciaLabel)
                 .addGap(18, 18, 18)
                 .addComponent(baixoRadioButton)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton2)
+                .addComponent(medioRadioButton)
                 .addGap(39, 39, 39)
-                .addComponent(jRadioButton3)
+                .addComponent(urgenteRadioButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        filtroNoticiasPanelLayout.setVerticalGroup(
+            filtroNoticiasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(filtroNoticiasPanelLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                .addGroup(filtroNoticiasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(grau_urgenciaLabel)
                     .addComponent(baixoRadioButton)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(medioRadioButton)
+                    .addComponent(urgenteRadioButton))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        avaliacoesSelecionadasPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Avaliações Selecionadas"));
+
+        pesquisasTextArea.setColumns(20);
+        pesquisasTextArea.setRows(5);
+        ScrollPane.setViewportView(pesquisasTextArea);
+
+        javax.swing.GroupLayout avaliacoesSelecionadasPanelLayout = new javax.swing.GroupLayout(avaliacoesSelecionadasPanel);
+        avaliacoesSelecionadasPanel.setLayout(avaliacoesSelecionadasPanelLayout);
+        avaliacoesSelecionadasPanelLayout.setHorizontalGroup(
+            avaliacoesSelecionadasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(avaliacoesSelecionadasPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+        avaliacoesSelecionadasPanelLayout.setVerticalGroup(
+            avaliacoesSelecionadasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avaliacoesSelecionadasPanelLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
+
+        data_minimaLabel.setText("Data Mínima");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(comandosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(comandosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(filtro_agencias_noticiasPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(filtro_catastrofePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(filtro_noticiasTabbedPane)
+                                    .addComponent(filtroNoticiasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(avaliacoesSelecionadasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(data_minimaLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(data_minima_noticiaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 52, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(filtro_agencias_noticiasPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(filtro_catastrofePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(filtro_noticiasTabbedPane)
-                    .addComponent(ScrollPane)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,14 +286,16 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(filtro_agencias_noticiasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(filtroNoticiasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filtro_noticiasTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(data_minimaLabel)
+                    .addComponent(data_minima_noticiaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(avaliacoesSelecionadasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
                 .addComponent(comandosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -252,25 +316,60 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         pesquisasTextArea.setText("");
     }//GEN-LAST:event_limpar_noticias_selecionadasButton
 
+    private void pesquisarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarNoticiaButton
+        int chave_catastrofe = -1;
+        if(catastrofes_cadastradasComboBox.getSelectedItem() != null){
+            chave_catastrofe = ((Catastrofe) catastrofes_cadastradasComboBox.getSelectedItem()).getSequencial();
+        }
+        
+        String chave_agencia_noticia = null;
+        if(agencia_noticiasComboBox.getSelectedItem() != null){
+            chave_agencia_noticia = ((AgenciaNoticia) agencia_noticiasComboBox.getSelectedItem()).getCnpj();
+        }
+        
+        char grau_urgencia = 'X';
+        if(grau_urgenciabuttonGroup.getSelection() != null){
+            grau_urgencia = (char) grau_urgenciabuttonGroup.getSelection().getMnemonic();
+        }
+        
+        char inundacao_ativo = 'X';
+        TipoQueimada tipo_queimada = null;
+        TipoVazamentoNuclear tipo_vazamento_nuclear = null;
+        int indice_aba_selecionada = filtro_noticiasTabbedPane.getSelectedIndex();
+        if(indice_aba_selecionada == 0){
+            inundacao_ativo = filtro_inundacaoPainel.getInundacaoAtiva();
+        }else if(indice_aba_selecionada == 1){
+            tipo_queimada = filtro_queimadaPainel.getSelectedTipoQueimada();
+        }else if(indice_aba_selecionada == 2){
+            tipo_vazamento_nuclear = filtro_vazamento_nuclearPainel.getSelectedTipoVazamentoNuclear();
+        }
+        Timestamp data_minima = getDataMinima();
+        ArrayList<Noticia> noticias = Noticia.pesquisarNoticias(chave_catastrofe, chave_agencia_noticia, grau_urgencia, inundacao_ativo, tipo_queimada, tipo_vazamento_nuclear);
+        mostrarNoticiasSelecionadas(noticias);
+    }//GEN-LAST:event_pesquisarNoticiaButton
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollPane;
     private javax.swing.JComboBox<String> agencia_noticiasComboBox;
     private javax.swing.JLabel agencia_noticiasLabel;
+    private javax.swing.JPanel avaliacoesSelecionadasPanel;
     private javax.swing.JRadioButton baixoRadioButton;
     private javax.swing.JComboBox<String> catastrofes_cadastradasComboBox;
     private javax.swing.JLabel catastrofes_cadastradasLabel;
     private javax.swing.JPanel comandosPanel;
+    private javax.swing.JLabel data_minimaLabel;
+    private javax.swing.JTextField data_minima_noticiaTextField;
+    private javax.swing.JPanel filtroNoticiasPanel;
     private javax.swing.JPanel filtro_agencias_noticiasPanel;
     private javax.swing.JPanel filtro_catastrofePanel;
     private javax.swing.JTabbedPane filtro_noticiasTabbedPane;
+    private javax.swing.JLabel grau_urgenciaLabel;
     private javax.swing.ButtonGroup grau_urgenciabuttonGroup;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JButton limpar_FiltrosButton;
     private javax.swing.JButton limpar_noticias_selecionadasButton;
+    private javax.swing.JRadioButton medioRadioButton;
+    private javax.swing.JButton pesquisarNoticiaButton;
     private javax.swing.JTextArea pesquisasTextArea;
+    private javax.swing.JRadioButton urgenteRadioButton;
     // End of variables declaration//GEN-END:variables
 }

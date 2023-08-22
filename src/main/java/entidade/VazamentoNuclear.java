@@ -15,6 +15,18 @@ public class VazamentoNuclear extends Catastrofe{
         this.descricao = descricao;
         this.ativo = ativo;
     }
+    
+        
+    public String toStringFull() {
+        String str = super.toStringFull() + " - " + tipo_vazamento_nuclear;
+        if (descricao != null) {
+            str += " -Descrição [" + descricao + "]";
+        }
+        if (ativo) {
+            str += "Inundação";
+        }
+        return str;
+    }
 
     public TipoVazamentoNuclear getTipoVazamentoNuclear() {
         return tipo_vazamento_nuclear;
