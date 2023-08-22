@@ -33,11 +33,11 @@ public class PainelFiltroInundacao extends javax.swing.JPanel {
         inundacaoAtivaLabel.setText("Inundação Ativa?");
 
         inundacaoAtivabuttonGroup.add(simRadioButton);
-        simRadioButton.setMnemonic('S');
+        simRadioButton.setMnemonic('T');
         simRadioButton.setText("Sim");
 
         inundacaoAtivabuttonGroup.add(naoRadioButton);
-        naoRadioButton.setMnemonic('N');
+        naoRadioButton.setMnemonic('F');
         naoRadioButton.setText("Nao");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

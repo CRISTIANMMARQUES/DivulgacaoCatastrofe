@@ -114,16 +114,16 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         dataHoraTextField.setText("");
     }
     
-    private AgenciaNoticia getVisaoAgenciaNoticiaSelecionada(Noticia noticia) {
+    private Noticia getVisaoAgenciaNoticiaSelecionada(Noticia noticia) {
         // Lógica para obter a visão de agência de notícia selecionada com base na notícia
-        AgenciaNoticia[] visoesAgencia = AgenciaNoticia.getVisoes();
+        Noticia[] visoes = Noticia.getVisoes();
        
         // Aqui você deve percorrer as visões para encontrar a correspondente à agência de notícia da notícia
-        for (AgenciaNoticia visaoAgencia : visoesAgencia) {
+        for (Noticia visao : visoes) {
             // Suponhamos que a notícia tenha uma referência para a agência de notícia associada:
-            if (noticia.getAgenciaNoticia().getCnpj().equals(visaoAgencia.getCnpj())) {
+            if (noticia.getAgenciaNoticia().getCnpj().equals(visao.getAgenciaNoticia().getCnpj())) {
                 
-                return visaoAgencia;
+                return visao;
             }
         }
 
