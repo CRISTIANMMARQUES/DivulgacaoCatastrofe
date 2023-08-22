@@ -45,7 +45,7 @@ public class Noticia {
             while(lista_resultados.next()){
                 visoes.add(new Noticia(lista_resultados.getInt("Sequencial"), 
                         AgenciaNoticia.buscarAgenciaNoticia(lista_resultados.getString("AgenciaID")).getVisao(),
-                        Catastrofe.buscarCatastrofe(lista_resultados.getInt("Sequencial")).getVisao()));
+                        Catastrofe.buscarCatastrofe(lista_resultados.getInt("CatastrofeID")).getVisao()));
             }
             lista_resultados.close();
             comando.close();

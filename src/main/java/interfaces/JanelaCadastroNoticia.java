@@ -127,11 +127,8 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     
     private Catastrofe getVisaoCatastrofeSelecionada(Noticia noticia) {
         Integer chave_catastrofe = noticia.getCatastrofe().getSequencial();
-        System.out.println("Sequencial"+chave_catastrofe);
         for (Catastrofe visao_catastrofe : catastrofes_cadastradas) {
             if (visao_catastrofe.getSequencial() == chave_catastrofe){
-                    //equals(chave_catastrofe)){
-                //System.out.println(visao_catastrofe);
                 return visao_catastrofe;
             }
         }
@@ -152,7 +149,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         agencia_noticiaLabel = new javax.swing.JLabel();
         catastrofesLabel = new javax.swing.JLabel();
         agencias_cadastradasComboBox = new javax.swing.JComboBox<>();
-        catastrofes_cadastradasComboBox = new javax.swing.JComboBox<>();
+        catastrofes_cadastradasComboBox = new javax.swing.JComboBox();
         grau_urgenciaLabel = new javax.swing.JLabel();
         urgenteRadioButton = new javax.swing.JRadioButton();
         medioRadioButton = new javax.swing.JRadioButton();
@@ -373,6 +370,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void consultarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarNoticiaButton
+        // TODO add your handling code here:
         Object selectedValue = noticias_cadastradasList.getSelectedValue();
         String mensagem_erro = null;
         Noticia noticia = null;
@@ -475,7 +473,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     private javax.swing.JButton alterarNoticiaButton;
     private javax.swing.JRadioButton baixoRadioButton;
     private javax.swing.JLabel catastrofesLabel;
-    private javax.swing.JComboBox<String> catastrofes_cadastradasComboBox;
+    private javax.swing.JComboBox catastrofes_cadastradasComboBox;
     private javax.swing.JPanel comandosPanel;
     private javax.swing.JButton consultarNoticiaButton;
     private javax.swing.JLabel dataHoraLabel;
