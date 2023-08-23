@@ -9,6 +9,7 @@ import entidade.VazamentoNuclear.TipoVazamentoNuclear;
 import interfaces.PainelFiltroInundacao;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 
 public class JanelaPesquisaNoticias extends javax.swing.JFrame {
     
@@ -17,10 +18,13 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
     PainelFiltroInundacao filtro_inundacaoPainel;
     PainelFiltroQueimada filtro_queimadaPainel;
     PainelFiltroVazamentoNuclear filtro_vazamento_nuclearPainel;
+    
     public JanelaPesquisaNoticias() {
         agencia_noticias_cadastradas = AgenciaNoticia.getVisoes();
         catastrofes_cadastradas = Catastrofe.getVisoes();
         initComponents();
+        catastrofes_cadastradasComboBox.setSelectedIndex(-1);
+        agencia_noticiasComboBox.setSelectedIndex(-1);
         filtro_inundacaoPainel = new PainelFiltroInundacao();
         filtro_queimadaPainel = new PainelFiltroQueimada();
         filtro_vazamento_nuclearPainel = new PainelFiltroVazamentoNuclear();
@@ -77,11 +81,11 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         baixoRadioButton = new javax.swing.JRadioButton();
         medioRadioButton = new javax.swing.JRadioButton();
         urgenteRadioButton = new javax.swing.JRadioButton();
+        data_minimaLabel = new javax.swing.JLabel();
+        data_minima_noticiaTextField = new javax.swing.JTextField();
         avaliacoesSelecionadasPanel = new javax.swing.JPanel();
         ScrollPane = new javax.swing.JScrollPane();
         pesquisasTextArea = new javax.swing.JTextArea();
-        data_minimaLabel = new javax.swing.JLabel();
-        data_minima_noticiaTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +95,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                 limpar_FiltrosButton(evt);
             }
         });
+        comandosPanel.add(limpar_FiltrosButton);
 
         limpar_noticias_selecionadasButton.setText("Limpar Noticias Selecionadas");
         limpar_noticias_selecionadasButton.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +103,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                 limpar_noticias_selecionadasButton(evt);
             }
         });
+        comandosPanel.add(limpar_noticias_selecionadasButton);
 
         pesquisarNoticiaButton.setText("Pesquisar");
         pesquisarNoticiaButton.addActionListener(new java.awt.event.ActionListener() {
@@ -105,36 +111,13 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                 pesquisarNoticiaButton(evt);
             }
         });
-
-        javax.swing.GroupLayout comandosPanelLayout = new javax.swing.GroupLayout(comandosPanel);
-        comandosPanel.setLayout(comandosPanelLayout);
-        comandosPanelLayout.setHorizontalGroup(
-            comandosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(comandosPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pesquisarNoticiaButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(limpar_FiltrosButton)
-                .addGap(18, 18, 18)
-                .addComponent(limpar_noticias_selecionadasButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        comandosPanelLayout.setVerticalGroup(
-            comandosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(comandosPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(comandosPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(limpar_FiltrosButton)
-                    .addComponent(limpar_noticias_selecionadasButton)
-                    .addComponent(pesquisarNoticiaButton))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
+        comandosPanel.add(pesquisarNoticiaButton);
 
         filtro_noticiasTabbedPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         filtro_catastrofePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtro Catastrofe"));
 
-        catastrofes_cadastradasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        catastrofes_cadastradasComboBox.setModel(new DefaultComboBoxModel(catastrofes_cadastradas));
 
         catastrofes_cadastradasLabel.setText("Catastrofes");
 
@@ -162,7 +145,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
 
         agencia_noticiasLabel.setText("Agencias Noticias");
 
-        agencia_noticiasComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        agencia_noticiasComboBox.setModel(new DefaultComboBoxModel(agencia_noticias_cadastradas));
 
         javax.swing.GroupLayout filtro_agencias_noticiasPanelLayout = new javax.swing.GroupLayout(filtro_agencias_noticiasPanel);
         filtro_agencias_noticiasPanel.setLayout(filtro_agencias_noticiasPanelLayout);
@@ -173,7 +156,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                 .addComponent(agencia_noticiasLabel)
                 .addGap(18, 18, 18)
                 .addComponent(agencia_noticiasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         filtro_agencias_noticiasPanelLayout.setVerticalGroup(
             filtro_agencias_noticiasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,31 +185,43 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         urgenteRadioButton.setMnemonic('U');
         urgenteRadioButton.setText("Urgente");
 
+        data_minimaLabel.setText("Data Mínima");
+
         javax.swing.GroupLayout filtroNoticiasPanelLayout = new javax.swing.GroupLayout(filtroNoticiasPanel);
         filtroNoticiasPanel.setLayout(filtroNoticiasPanelLayout);
         filtroNoticiasPanelLayout.setHorizontalGroup(
             filtroNoticiasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(filtroNoticiasPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(grau_urgenciaLabel)
-                .addGap(18, 18, 18)
-                .addComponent(baixoRadioButton)
-                .addGap(18, 18, 18)
-                .addComponent(medioRadioButton)
-                .addGap(39, 39, 39)
-                .addComponent(urgenteRadioButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(filtroNoticiasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(filtroNoticiasPanelLayout.createSequentialGroup()
+                        .addComponent(grau_urgenciaLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(baixoRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(medioRadioButton)
+                        .addGap(39, 39, 39)
+                        .addComponent(urgenteRadioButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, filtroNoticiasPanelLayout.createSequentialGroup()
+                        .addComponent(data_minimaLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(data_minima_noticiaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         filtroNoticiasPanelLayout.setVerticalGroup(
             filtroNoticiasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(filtroNoticiasPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
                 .addGroup(filtroNoticiasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(grau_urgenciaLabel)
                     .addComponent(baixoRadioButton)
                     .addComponent(medioRadioButton)
                     .addComponent(urgenteRadioButton))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(filtroNoticiasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(data_minimaLabel)
+                    .addComponent(data_minima_noticiaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
 
         avaliacoesSelecionadasPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Avaliações Selecionadas"));
@@ -241,18 +236,16 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
             avaliacoesSelecionadasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(avaliacoesSelecionadasPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(ScrollPane)
+                .addContainerGap())
         );
         avaliacoesSelecionadasPanelLayout.setVerticalGroup(
             avaliacoesSelecionadasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, avaliacoesSelecionadasPanelLayout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(avaliacoesSelecionadasPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addGap(16, 16, 16))
         );
-
-        data_minimaLabel.setText("Data Mínima");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -264,43 +257,36 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(comandosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(avaliacoesSelecionadasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(filtro_agencias_noticiasPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(filtro_catastrofePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(filtro_noticiasTabbedPane)
-                                    .addComponent(filtroNoticiasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(avaliacoesSelecionadasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(data_minimaLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(data_minima_noticiaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 52, Short.MAX_VALUE)))
+                                    .addComponent(filtroNoticiasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(filtro_agencias_noticiasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(filtro_noticiasTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 35, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(filtro_catastrofePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(filtro_agencias_noticiasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(filtroNoticiasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(filtro_noticiasTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(data_minimaLabel)
-                    .addComponent(data_minima_noticiaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(filtro_catastrofePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filtro_agencias_noticiasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(filtro_noticiasTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                    .addComponent(filtroNoticiasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
                 .addComponent(avaliacoesSelecionadasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(26, 26, 26)
                 .addComponent(comandosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();

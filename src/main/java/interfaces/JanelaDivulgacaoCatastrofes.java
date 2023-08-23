@@ -4,6 +4,7 @@ package interfaces;
 import controle.ControladorCadastroAgenciaNoticia;
 import controle.ControladorCadastroCatastrofes;
 import controle.ControladorCadastroNoticias;
+import interfaces.JanelaPesquisaNoticias;
 import javax.swing.JOptionPane;
 import persistencia.BD;
 
@@ -22,8 +23,8 @@ public class JanelaDivulgacaoCatastrofes extends javax.swing.JFrame {
         agenciaNoticiaMenu = new javax.swing.JMenu();
         cadastro_agenciaNoticiaMenuItem = new javax.swing.JMenuItem();
         localizacaoMenu = new javax.swing.JMenu();
-        cadastro_localizacaoMenuItem = new javax.swing.JMenuItem();
-        pesquisar_localizacaoMenuItem = new javax.swing.JMenuItem();
+        cadastro_noticiasMenuItem = new javax.swing.JMenuItem();
+        pesquisar_noticiasMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CADASTRO DE CATASTROFES");
@@ -60,21 +61,21 @@ public class JanelaDivulgacaoCatastrofes extends javax.swing.JFrame {
 
         localizacaoMenu.setText("Noticias");
 
-        cadastro_localizacaoMenuItem.setText("Cadastrar");
-        cadastro_localizacaoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        cadastro_noticiasMenuItem.setText("Cadastrar");
+        cadastro_noticiasMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarLocalizacao(evt);
+                cadastrarNoticias(evt);
             }
         });
-        localizacaoMenu.add(cadastro_localizacaoMenuItem);
+        localizacaoMenu.add(cadastro_noticiasMenuItem);
 
-        pesquisar_localizacaoMenuItem.setText("Pesquisar");
-        pesquisar_localizacaoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        pesquisar_noticiasMenuItem.setText("Pesquisar");
+        pesquisar_noticiasMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pesquisarLocalizacao(evt);
+                pesquisarNoticias(evt);
             }
         });
-        localizacaoMenu.add(pesquisar_localizacaoMenuItem);
+        localizacaoMenu.add(pesquisar_noticiasMenuItem);
 
         divulgacao_catastrofesMenuBar.add(localizacaoMenu);
 
@@ -103,13 +104,14 @@ public class JanelaDivulgacaoCatastrofes extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_terminarSistema
 
-    private void cadastrarLocalizacao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarLocalizacao
+    private void cadastrarNoticias(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarNoticias
         new ControladorCadastroNoticias();
-    }//GEN-LAST:event_cadastrarLocalizacao
+    }//GEN-LAST:event_cadastrarNoticias
 
-    private void pesquisarLocalizacao(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarLocalizacao
-        informarServiçoIndisponível();
-    }//GEN-LAST:event_pesquisarLocalizacao
+    private void pesquisarNoticias(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarNoticias
+            JanelaPesquisaNoticias pesquisaNoticias = new JanelaPesquisaNoticias();
+            pesquisaNoticias.setVisible(true);
+    }//GEN-LAST:event_pesquisarNoticias
 
     private void cadastrarAgenciaNoticia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarAgenciaNoticia
         new ControladorCadastroAgenciaNoticia();
@@ -132,10 +134,11 @@ public class JanelaDivulgacaoCatastrofes extends javax.swing.JFrame {
     private javax.swing.JMenu agenciaNoticiaMenu;
     private javax.swing.JMenuItem cadastro_agenciaNoticiaMenuItem;
     private javax.swing.JMenuItem cadastro_catastrofeMenuItem;
-    private javax.swing.JMenuItem cadastro_localizacaoMenuItem;
+    private javax.swing.JMenuItem cadastro_noticiasMenuItem;
     private javax.swing.JMenu catastrofeMenu;
     private javax.swing.JMenuBar divulgacao_catastrofesMenuBar;
     private javax.swing.JMenu localizacaoMenu;
-    private javax.swing.JMenuItem pesquisar_localizacaoMenuItem;
+    private javax.swing.JMenuItem pesquisar_noticiasMenuItem;
     // End of variables declaration//GEN-END:variables
+
 }

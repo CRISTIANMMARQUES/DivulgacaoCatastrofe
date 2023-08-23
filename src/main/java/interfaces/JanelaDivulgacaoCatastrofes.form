@@ -39,20 +39,20 @@
             <Property name="text" type="java.lang.String" value="Noticias"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="cadastro_localizacaoMenuItem">
+            <MenuItem class="javax.swing.JMenuItem" name="cadastro_noticiasMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cadastrar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cadastrarLocalizacao"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cadastrarNoticias"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="pesquisar_localizacaoMenuItem">
+            <MenuItem class="javax.swing.JMenuItem" name="pesquisar_noticiasMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Pesquisar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pesquisarLocalizacao"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pesquisarNoticias"/>
               </Events>
             </MenuItem>
           </SubComponents>
