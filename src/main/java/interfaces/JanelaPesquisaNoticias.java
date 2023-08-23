@@ -56,7 +56,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
             if(primeira_noticia){
                 pesquisasTextArea.append(noticia.toStringFull());
                 primeira_noticia = false;
-            }else pesquisasTextArea.append(noticia.toStringFull());
+            }else pesquisasTextArea.append("\n"+noticia.toStringFull());
         }
     }
 
@@ -295,6 +295,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
     private void limpar_FiltrosButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpar_FiltrosButton
         catastrofes_cadastradasComboBox.setSelectedIndex(-1);
         agencia_noticiasComboBox.setSelectedIndex(-1);
+        grau_urgenciabuttonGroup.clearSelection();
         filtro_inundacaoPainel.limparFiltro();
         filtro_queimadaPainel.limparFiltros();
         filtro_vazamento_nuclearPainel.limparFiltros();
@@ -308,7 +309,9 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
     private void pesquisarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarNoticiaButton
         int chave_catastrofe = -1;
         if(catastrofes_cadastradasComboBox.getSelectedItem() != null){
+            
             chave_catastrofe = ((Catastrofe) catastrofes_cadastradasComboBox.getSelectedItem()).getSequencial();
+            
         }
         
         String chave_agencia_noticia = null;
@@ -322,9 +325,13 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         }
         
         char inundacao_ativo = 'X';
+        
         TipoQueimada tipo_queimada = null;
+        
         TipoVazamentoNuclear tipo_vazamento_nuclear = null;
+        
         int indice_aba_selecionada = filtro_noticiasTabbedPane.getSelectedIndex();
+        
         if(indice_aba_selecionada == 0){
             inundacao_ativo = filtro_inundacaoPainel.getInundacaoAtiva();
         }else if(indice_aba_selecionada == 1){
@@ -332,8 +339,14 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         }else if(indice_aba_selecionada == 2){
             tipo_vazamento_nuclear = filtro_vazamento_nuclearPainel.getSelectedTipoVazamentoNuclear();
         }
+        
         Timestamp data_minima = getDataMinima();
-        ArrayList<Noticia> noticias = Noticia.pesquisarNoticia(chave_agencia_noticia, chave_catastrofe, grau_urgencia, inundacao_ativo, tipo_queimada, tipo_vazamento_nuclear, data_minima);
+        
+        ArrayList<Noticia> noticias = Noticia.pesquisarNoticia(chave_agencia_noticia, chave_catastrofe, grau_urgencia, 
+                inundacao_ativo, tipo_queimada, tipo_vazamento_nuclear, data_minima);
+        
+        
+        
         mostrarNoticiasSelecionadas(noticias);
     }//GEN-LAST:event_pesquisarNoticiaButton
 
