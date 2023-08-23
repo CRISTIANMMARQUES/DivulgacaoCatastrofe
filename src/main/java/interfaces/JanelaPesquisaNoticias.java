@@ -191,12 +191,15 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         grau_urgenciaLabel.setText("Grau Urgencia");
 
         grau_urgenciabuttonGroup.add(baixoRadioButton);
+        baixoRadioButton.setMnemonic('B');
         baixoRadioButton.setText("Baixo");
 
         grau_urgenciabuttonGroup.add(medioRadioButton);
+        medioRadioButton.setMnemonic('M');
         medioRadioButton.setText("Medio");
 
         grau_urgenciabuttonGroup.add(urgenteRadioButton);
+        urgenteRadioButton.setMnemonic('U');
         urgenteRadioButton.setText("Urgente");
 
         javax.swing.GroupLayout filtroNoticiasPanelLayout = new javax.swing.GroupLayout(filtroNoticiasPanel);
@@ -344,7 +347,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
             tipo_vazamento_nuclear = filtro_vazamento_nuclearPainel.getSelectedTipoVazamentoNuclear();
         }
         Timestamp data_minima = getDataMinima();
-        ArrayList<Noticia> noticias = Noticia.pesquisarNoticias(chave_catastrofe, chave_agencia_noticia, grau_urgencia, inundacao_ativo, tipo_queimada, tipo_vazamento_nuclear);
+        ArrayList<Noticia> noticias = Noticia.pesquisarNoticia(chave_agencia_noticia, chave_catastrofe, grau_urgencia, inundacao_ativo, tipo_queimada, tipo_vazamento_nuclear, data_minima);
         mostrarNoticiasSelecionadas(noticias);
     }//GEN-LAST:event_pesquisarNoticiaButton
 

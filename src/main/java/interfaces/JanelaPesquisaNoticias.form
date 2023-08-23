@@ -318,6 +318,7 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="grau_urgenciabuttonGroup"/>
             </Property>
+            <Property name="mnemonic" type="int" value="66"/>
             <Property name="text" type="java.lang.String" value="Baixo"/>
           </Properties>
         </Component>
@@ -326,6 +327,7 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="grau_urgenciabuttonGroup"/>
             </Property>
+            <Property name="mnemonic" type="int" value="77"/>
             <Property name="text" type="java.lang.String" value="Medio"/>
           </Properties>
         </Component>
@@ -334,6 +336,7 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="grau_urgenciabuttonGroup"/>
             </Property>
+            <Property name="mnemonic" type="int" value="85"/>
             <Property name="text" type="java.lang.String" value="Urgente"/>
           </Properties>
         </Component>
