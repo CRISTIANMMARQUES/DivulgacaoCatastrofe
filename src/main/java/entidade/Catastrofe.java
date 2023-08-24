@@ -347,9 +347,9 @@ public class Catastrofe {
     }
     
     public String toStringFull(){
-        String str = nome;
-        if(localizacao != null) str += " [" +localizacao+ "] ";
-        if(data != null) str += " [" +data+ "] ";
+        String str = "\nCatastrofe: "+nome;
+        if(localizacao != null) str += "\n        Localização: " +localizacao;
+        if(data != null) str += "\n        Data: " +data;
         return str;
     }
     
