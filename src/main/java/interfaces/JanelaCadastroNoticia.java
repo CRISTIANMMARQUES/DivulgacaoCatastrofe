@@ -213,9 +213,9 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         descricaoLabel.setText("Descrição");
 
         descricaoTextArea.setColumns(20);
+        descricaoTextArea.setLineWrap(true);
         descricaoTextArea.setRows(5);
         descricaoTextArea.setMaximumSize(null);
-        descricaoTextArea.setMinimumSize(null);
         descricaoTextArea.setPreferredSize(new java.awt.Dimension(200, 100));
         descricaoScrollPane.setViewportView(descricaoTextArea);
         descricaoTextArea.getAccessibleContext().setAccessibleName("");

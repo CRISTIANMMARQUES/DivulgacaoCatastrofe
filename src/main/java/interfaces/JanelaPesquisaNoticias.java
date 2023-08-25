@@ -87,7 +87,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         ScrollPane = new javax.swing.JScrollPane();
         pesquisasTextArea = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         limpar_FiltrosButton.setText("Limpar Filtros");
         limpar_FiltrosButton.addActionListener(new java.awt.event.ActionListener() {

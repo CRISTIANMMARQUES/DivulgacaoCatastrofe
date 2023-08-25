@@ -18,13 +18,9 @@ public class VazamentoNuclear extends Catastrofe{
     
         
     public String toStringFull() {
-        String str = super.toStringFull() + " - " + tipo_vazamento_nuclear;
-        if (descricao != null) {
-            str += " -Descrição [" + descricao + "]";
-        }
-        if (ativo) {
-            str += "Inundação";
-        }
+        String str = super.toStringFull() + "\n        Tipo Catastrofe: " +tipo_vazamento_nuclear;
+        if(descricao != null) str += "\n        Descrição: " +descricao;
+        if (ativo) str += "Vazamento Nuclear ATIVO";
         return str;
     }
 

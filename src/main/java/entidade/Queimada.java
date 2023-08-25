@@ -17,13 +17,9 @@ public class Queimada extends Catastrofe {
     }
     
     public String toStringFull() {
-        String str = super.toStringFull() + " - " + tipo_queimada;
-        if (descricao != null) {
-            str += " -Descrição [" + descricao + "]";
-        }
-        if (ativo) {
-            str += "Inundação";
-        }
+        String str = super.toStringFull() + "\n        Tipo Catastrofe: " +tipo_queimada;
+        if(descricao != null) str += "\n        Descrição: " +descricao;
+        if (ativo) str += "Queimada ATIVA";
         return str;
     }
         
