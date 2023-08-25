@@ -128,7 +128,7 @@ public class Noticia {
     }
     
     public static String alterarNoticia(Noticia noticia){
-        String sql = "UPDATE Noticia SET Descricao = ?, AgenciaID = ?, CatastrofeID = ?, GrauUrgencia = ? WHERE Sequencia = ?";
+        String sql = "UPDATE Noticia SET Descricao = ?, AgenciaID = ?, CatastrofeID = ?, GrauUrgencia = ? WHERE Sequencial = ?";
         try{
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
             comando.setString(1, noticia.getDescricao());
@@ -259,17 +259,20 @@ public class Noticia {
             while(lista_resultados.next()){
                 Noticia noticias_pesquisadas = Noticia.buscarNoticias(lista_resultados.getInt(7));
                 sequencial_catastrofe = lista_resultados.getString(2);
+//                System.out.println(sequencial_noticia);
                 
-//                if(grau_urgencia != 'X'){
-//                    if(isOkPesquisaEmNoticia(sequencial_noticia, grau_urgencia)) noticias_selecionadas.add(noticias_pesquisadas);
-//                }
-//                if(inundacao_ativa != 'X'){
-//                    if(isOkPesquisaEmInundação(sequencial_catastrofe ,inundacao_ativa)) noticias_selecionadas.add(noticias_pesquisadas);
-//                }else{
-//                    noticias_selecionadas.add(noticias_pesquisadas);
-//                }
+                if(grau_urgencia != 'X'){
+                    
+                    if(isOkPesquisaEmNoticia(sequencial_noticia, grau_urgencia)) noticias_selecionadas.add(noticias_pesquisadas);
+                }
+                if(inundacao_ativa != 'X'){
+                    if(isOkPesquisaEmInundação(sequencial_catastrofe ,inundacao_ativa)) noticias_selecionadas.add(noticias_pesquisadas);
+                }else{
+                    noticias_selecionadas.add(noticias_pesquisadas);
+                }
                 noticias_selecionadas.add(noticias_pesquisadas);
             }
+            
             
             comando.close();
         }catch(SQLException excecao_sql){excecao_sql.printStackTrace();}
@@ -279,7 +282,7 @@ public class Noticia {
     private static boolean isOkPesquisaEmNoticia(int sequencial_noticia, char grau_urgencia){
         boolean pesquisa_ok = false;
         String sql = "SELECT *FROM noticia WHERE sequencial = ?";
-        if(grau_urgencia != 'X') sql += "AND GrauUrgencia = ?";
+        if(grau_urgencia != 'X') sql += " AND GrauUrgencia = ?";
         ResultSet lista_resultados = null;
         int index = 1;
         try{
@@ -299,19 +302,19 @@ public class Noticia {
     
     private static boolean isOkPesquisaEmInundação(String sequencial_catastrofe, char inundacao_ativa){
         boolean pesquisa_ok = false;
-        String sql = "SELECT *FROM inundacao WHERE CatastrofeID = ?";
-        if(inundacao_ativa != 'X') sql += "AND Ativo = ?";
+        String sql = "SELECT * FROM inundacao WHERE catastrofeid = ?";
+        if(inundacao_ativa != 'X') sql += " AND Ativo = ?";
         ResultSet lista_resultados = null;
         int index = 1;
         try{
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
             comando.setString(1, sequencial_catastrofe);
             switch(inundacao_ativa){
-                case 'T': comando.setBoolean(++index, true); break;
+                case 'T': comando.setBoolean(++index, true);break;
                 case 'F': comando.setBoolean(++index, false);
             }
             lista_resultados = comando.executeQuery();
-            while(lista_resultados.next()) pesquisa_ok = true;
+            while(lista_resultados.next())pesquisa_ok = true;
             lista_resultados.close();
         }catch (SQLException excecao_sql){excecao_sql.printStackTrace();}
         return pesquisa_ok;

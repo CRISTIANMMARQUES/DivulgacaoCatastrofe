@@ -77,6 +77,7 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
         String sequencial_str = sequencialTextField.getText();
         int sequencial = 0;
         if(!sequencial_str.isEmpty())sequencial = Integer.parseInt(sequencial_str);
+        
         AgenciaNoticia visao_agencia_noticia = (AgenciaNoticia) agencias_cadastradasComboBox.getSelectedItem();
         if(visao_agencia_noticia == null) return null;
         Catastrofe visao_catastrofes = (Catastrofe)catastrofes_cadastradasComboBox.getSelectedItem();
@@ -404,12 +405,9 @@ public class JanelaCadastroNoticia extends javax.swing.JFrame {
     }//GEN-LAST:event_consultarNoticiaButton
 
     private void alterarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarNoticiaButton
-        // TODO add your handling code here:
         Noticia noticia = obtemNoticiaInformada();
         String mensagem_erro = null;
-        if(noticia != null){
-            mensagem_erro = controlador.alterarNoticia(noticia);
-        }
+        if(noticia != null) mensagem_erro = controlador.alterarNoticia(noticia);
         else mensagem_erro = "Algum atributo da Noticia não foi informado";
         if(mensagem_erro != null) informarErro(mensagem_erro);
     }//GEN-LAST:event_alterarNoticiaButton

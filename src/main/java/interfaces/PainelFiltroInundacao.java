@@ -8,35 +8,35 @@ public class PainelFiltroInundacao extends javax.swing.JPanel {
     }
     
     public char getInundacaoAtiva(){
-        char inundacao_ativa = 'x';
-        if(inundacaoAtivabuttonGroup.getSelection() != null){
-            switch(inundacaoAtivabuttonGroup.getSelection().getMnemonic()){
-                case 0: inundacao_ativa = 'S'; break;
-                case 1: inundacao_ativa = 'N';
+        char inundacao_ativa = 'X';
+        if(inundacao_AtivabuttonGroup.getSelection() != null){
+            switch(inundacao_AtivabuttonGroup.getSelection().getMnemonic()){
+                case 0: inundacao_ativa = 'T'; break;
+                case 1: inundacao_ativa = 'F';
             }
         }
         return inundacao_ativa;
     }
     
     public void limparFiltro(){
-        inundacaoAtivabuttonGroup.clearSelection();
+        inundacao_AtivabuttonGroup.clearSelection();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        inundacaoAtivabuttonGroup = new javax.swing.ButtonGroup();
+        inundacao_AtivabuttonGroup = new javax.swing.ButtonGroup();
         inundacaoAtivaLabel = new javax.swing.JLabel();
         simRadioButton = new javax.swing.JRadioButton();
         naoRadioButton = new javax.swing.JRadioButton();
 
         inundacaoAtivaLabel.setText("Inundação Ativa?");
 
-        inundacaoAtivabuttonGroup.add(simRadioButton);
+        inundacao_AtivabuttonGroup.add(simRadioButton);
         simRadioButton.setMnemonic('T');
         simRadioButton.setText("Sim");
 
-        inundacaoAtivabuttonGroup.add(naoRadioButton);
+        inundacao_AtivabuttonGroup.add(naoRadioButton);
         naoRadioButton.setMnemonic('F');
         naoRadioButton.setText("Nao");
 
@@ -68,7 +68,7 @@ public class PainelFiltroInundacao extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel inundacaoAtivaLabel;
-    private javax.swing.ButtonGroup inundacaoAtivabuttonGroup;
+    private javax.swing.ButtonGroup inundacao_AtivabuttonGroup;
     private javax.swing.JRadioButton naoRadioButton;
     private javax.swing.JRadioButton simRadioButton;
     // End of variables declaration//GEN-END:variables

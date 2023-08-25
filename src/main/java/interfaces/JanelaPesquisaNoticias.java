@@ -37,22 +37,36 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
     private Timestamp getDataMinima(){
         Timestamp data_minima = null;
         String data_minima_str = data_minima_noticiaTextField.getText();
-        if(!data_minima_str.isEmpty()){
-            String[] data_minima_partes = data_minima_str.toString().split("/");
+        if (!data_minima_str.isEmpty()) {
+            String[] data_minima_partes = data_minima_str.split("/");
             String dia = data_minima_partes[0];
             String mes = data_minima_partes[1];
             String ano = data_minima_partes[2];
-            if((dia.length() == 2) && (mes.length() == 2) && (ano.length() == 4)){
-                data_minima_str = ano + "-" + mes + "-" + dia + "00:00:00";
+            if ((dia.length() == 2) && (mes.length() == 2) && (ano.length() == 4)) {
+                data_minima_str = ano + "-" + mes + "-" + dia + " 00:00:00"; // Adiciona espaço e hora
                 data_minima = Timestamp.valueOf(data_minima_str);
             }
         }
         return data_minima;
+//        Timestamp data_minima = null;
+//        String data_minima_str = data_minima_noticiaTextField.getText();
+//        if(!data_minima_str.isEmpty()){
+//            String[] data_minima_partes = data_minima_str.toString().split("/");
+//            String dia = data_minima_partes[0];
+//            String mes = data_minima_partes[1];
+//            String ano = data_minima_partes[2];
+//            if((dia.length() == 2) && (mes.length() == 2) && (ano.length() == 4)){
+//                data_minima_str = ano + "-" + mes + "-" + dia + "00:00:00";
+//                data_minima = Timestamp.valueOf(data_minima_str);
+//            }
+//        }
+//        return data_minima;
     }
     
     private void mostrarNoticiasSelecionadas(ArrayList<Noticia> noticias){
         boolean primeira_noticia = true;
         for(Noticia noticia: noticias){
+            //pesquisasTextArea.append(noticia.toStringFull());
             if(primeira_noticia){
                 pesquisasTextArea.append(noticia.toStringFull());
                 primeira_noticia = false;
@@ -299,6 +313,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         filtro_inundacaoPainel.limparFiltro();
         filtro_queimadaPainel.limparFiltros();
         filtro_vazamento_nuclearPainel.limparFiltros();
+        data_minima_noticiaTextField.setText("");
     }//GEN-LAST:event_limpar_FiltrosButton
 
     private void limpar_noticias_selecionadasButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpar_noticias_selecionadasButton
@@ -308,24 +323,17 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
 
     private void pesquisarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarNoticiaButton
         int chave_catastrofe = -1;
-        if(catastrofes_cadastradasComboBox.getSelectedItem() != null){
-            
-            chave_catastrofe = ((Catastrofe) catastrofes_cadastradasComboBox.getSelectedItem()).getSequencial();
-            
-        }
+        if(catastrofes_cadastradasComboBox.getSelectedItem() != null){chave_catastrofe = ((Catastrofe) catastrofes_cadastradasComboBox.getSelectedItem()).getSequencial();}
         
         String chave_agencia_noticia = null;
-        if(agencia_noticiasComboBox.getSelectedItem() != null){
-            chave_agencia_noticia = ((AgenciaNoticia) agencia_noticiasComboBox.getSelectedItem()).getCnpj();
-        }
+        if(agencia_noticiasComboBox.getSelectedItem() != null){chave_agencia_noticia = ((AgenciaNoticia) agencia_noticiasComboBox.getSelectedItem()).getCnpj();}
         
         char grau_urgencia = 'X';
-        if(grau_urgenciabuttonGroup.getSelection() != null){
-            grau_urgencia = (char) grau_urgenciabuttonGroup.getSelection().getMnemonic();
-        }
+        if(grau_urgenciabuttonGroup.getSelection() != null){grau_urgencia = (char) grau_urgenciabuttonGroup.getSelection().getMnemonic();}
         
         char inundacao_ativo = 'X';
         
+                
         TipoQueimada tipo_queimada = null;
         
         TipoVazamentoNuclear tipo_vazamento_nuclear = null;
@@ -334,6 +342,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         
         if(indice_aba_selecionada == 0){
             inundacao_ativo = filtro_inundacaoPainel.getInundacaoAtiva();
+            System.out.println(inundacao_ativo);
         }else if(indice_aba_selecionada == 1){
             tipo_queimada = filtro_queimadaPainel.getSelectedTipoQueimada();
         }else if(indice_aba_selecionada == 2){
