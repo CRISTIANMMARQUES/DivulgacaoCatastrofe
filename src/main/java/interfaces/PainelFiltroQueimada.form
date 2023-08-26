@@ -58,16 +58,25 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="florestaRadioButton">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="tipo_queimadabuttonGroup"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="floresta"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="urbanaRadioButton">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="tipo_queimadabuttonGroup"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="urbana"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="canavialRadioButton">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="tipo_queimadabuttonGroup"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="canavial"/>
       </Properties>
     </Component>

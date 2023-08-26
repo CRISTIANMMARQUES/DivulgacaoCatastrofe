@@ -225,16 +225,19 @@ public class Noticia {
         return str;
     }
     
-    public static ArrayList<Noticia> pesquisarNoticia(String chave_agencia_noticia, int chave_catastrofe, char grau_urgencia, char inundacao_ativa, TipoQueimada tipo_queimada, 
-            TipoVazamentoNuclear tipo_vazamento_nuclear, Timestamp data_minima){
+    public static ArrayList<Noticia> pesquisarNoticia(String chave_agencia_noticia, int chave_catastrofe, char grau_urgencia, int inundacao_ativa, 
+            int tipo_queimada, TipoVazamentoNuclear tipo_vazamento_nuclear, Timestamp data_minima){
+        //System.out.println("Entidade Noticia: "+inundacao_ativa);
+        //int inundacao_ativa_int = 0;
         String sql = "SELECT A.Cnpj, C.Sequencial, N.GrauUrgencia, I.Ativo, Q.tipo_queimada, V.tipo_vazamento_nuclear, N.Sequencial, N.DataHora\n" +
                 "FROM Agencia A, Catastrofe C, Noticia N, Inundacao I, Queimada Q, Vazamento_nuclear V\n" +
                 "WHERE N.AgenciaID = A.Cnpj AND N.CatastrofeID = C.Sequencial";
         if(chave_agencia_noticia != null) sql += " AND A.Cnpj = ?";
         if(chave_catastrofe > -1) sql += " AND C.Sequencial = ?";
         if(grau_urgencia != 'X') sql += " AND N.GrauUrgencia = ?";
-        if(inundacao_ativa != 'X') sql += " AND I.Ativo = ?";
-        if(tipo_queimada != null) sql += " AND Q.tipo_queimada = ?";
+        if(inundacao_ativa > -1) sql += " AND I.Ativo = ?";
+        //if(inundacao_ativa_int > -1) sql += " AND I.Ativo = ?";
+        if(tipo_queimada > -1) sql += " AND Q.tipo_queimada = ?";
         if(tipo_vazamento_nuclear != null) sql += " AND V.tipo_vazamento_nuclear = ?";
         if(data_minima != null) sql += " AND N.DataHora >= ?";
         sql += " ORDER BY N.Sequencial";
@@ -250,8 +253,10 @@ public class Noticia {
             if (chave_agencia_noticia != null) comando.setString(++index, chave_agencia_noticia);
             if (chave_catastrofe > -1) comando.setInt(++index, chave_catastrofe);
             if (grau_urgencia != 'X') comando.setString(++index, grau_urgencia + "");
-            if (inundacao_ativa != 'X') comando.setString(++index, inundacao_ativa + "");
-            if (tipo_queimada != null) comando.setInt(++index, tipo_queimada.ordinal());
+            //if (inundacao_ativa != 'X') comando.setString(++index, inundacao_ativa + "");
+            if (inundacao_ativa > -1) comando.setInt(++index, inundacao_ativa);
+
+            if (tipo_queimada > -1) comando.setInt(++index, tipo_queimada);
             if (tipo_vazamento_nuclear != null) comando.setInt(++index, tipo_vazamento_nuclear.ordinal());
             if (data_minima != null) comando.setTimestamp(++index, data_minima);
             lista_resultados = comando.executeQuery();
@@ -265,11 +270,11 @@ public class Noticia {
                     
                     if(isOkPesquisaEmNoticia(sequencial_noticia, grau_urgencia)) noticias_selecionadas.add(noticias_pesquisadas);
                 }
-                if(inundacao_ativa != 'X'){
-                    if(isOkPesquisaEmInundação(sequencial_catastrofe ,inundacao_ativa)) noticias_selecionadas.add(noticias_pesquisadas);
-                }else{
-                    noticias_selecionadas.add(noticias_pesquisadas);
-                }
+//                if(inundacao_ativa != 'X'){
+//                    if(isOkPesquisaEmInundação(sequencial_catastrofe ,inundacao_ativa)) noticias_selecionadas.add(noticias_pesquisadas);
+//                }else{
+//                    noticias_selecionadas.add(noticias_pesquisadas);
+//                }
                 noticias_selecionadas.add(noticias_pesquisadas);
             }
             

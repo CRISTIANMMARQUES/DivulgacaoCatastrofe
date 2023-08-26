@@ -48,19 +48,6 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
             }
         }
         return data_minima;
-//        Timestamp data_minima = null;
-//        String data_minima_str = data_minima_noticiaTextField.getText();
-//        if(!data_minima_str.isEmpty()){
-//            String[] data_minima_partes = data_minima_str.toString().split("/");
-//            String dia = data_minima_partes[0];
-//            String mes = data_minima_partes[1];
-//            String ano = data_minima_partes[2];
-//            if((dia.length() == 2) && (mes.length() == 2) && (ano.length() == 4)){
-//                data_minima_str = ano + "-" + mes + "-" + dia + "00:00:00";
-//                data_minima = Timestamp.valueOf(data_minima_str);
-//            }
-//        }
-//        return data_minima;
     }
     
     private void mostrarNoticiasSelecionadas(ArrayList<Noticia> noticias){
@@ -250,7 +237,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
             avaliacoesSelecionadasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(avaliacoesSelecionadasPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ScrollPane)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
                 .addContainerGap())
         );
         avaliacoesSelecionadasPanelLayout.setVerticalGroup(
@@ -272,8 +259,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                         .addComponent(comandosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(avaliacoesSelecionadasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(filtro_catastrofePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -281,7 +267,8 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(filtro_agencias_noticiasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(filtro_noticiasTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(filtro_noticiasTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(avaliacoesSelecionadasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 35, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -296,11 +283,11 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(filtro_noticiasTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                     .addComponent(filtroNoticiasPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(avaliacoesSelecionadasPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comandosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -331,10 +318,9 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         char grau_urgencia = 'X';
         if(grau_urgenciabuttonGroup.getSelection() != null){grau_urgencia = (char) grau_urgenciabuttonGroup.getSelection().getMnemonic();}
         
-        char inundacao_ativo = 'X';
+        int inundacao_ativo = -1;
         
-                
-        TipoQueimada tipo_queimada = null;
+        int tipo_queimada = -1;
         
         TipoVazamentoNuclear tipo_vazamento_nuclear = null;
         
@@ -342,9 +328,9 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         
         if(indice_aba_selecionada == 0){
             inundacao_ativo = filtro_inundacaoPainel.getInundacaoAtiva();
-            System.out.println(inundacao_ativo);
         }else if(indice_aba_selecionada == 1){
             tipo_queimada = filtro_queimadaPainel.getSelectedTipoQueimada();
+            System.out.println(tipo_queimada);
         }else if(indice_aba_selecionada == 2){
             tipo_vazamento_nuclear = filtro_vazamento_nuclearPainel.getSelectedTipoVazamentoNuclear();
         }

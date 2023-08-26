@@ -9,12 +9,26 @@ public class PainelFiltroQueimada extends javax.swing.JPanel {
         initComponents();
     }
     
-    public Queimada.TipoQueimada getSelectedTipoQueimada(){
-        Queimada.TipoQueimada tipo_queimada = null;
-        if(tipo_queimadabuttonGroup.getSelection() != null) tipo_queimada = Queimada.TipoQueimada.values()
-                [tipo_queimadabuttonGroup.getSelection().getMnemonic()];
-        return tipo_queimada;
+    public int getSelectedTipoQueimada() {
+        int tipoQueimadaInt = -1; // Valor padrão caso nenhum tipo seja selecionado
+
+        if (florestaRadioButton.isSelected()) {
+            tipoQueimadaInt = 0;
+        } else if (urbanaRadioButton.isSelected()) {
+            tipoQueimadaInt = 1;
+        } else if (canavialRadioButton.isSelected()) {
+            tipoQueimadaInt = 2;
+        }
+
+        return tipoQueimadaInt;
     }
+    
+//    public Queimada.TipoQueimada getSelectedTipoQueimada(){
+//        Queimada.TipoQueimada tipo_queimada = null;
+//        if(tipo_queimadabuttonGroup.getSelection() != null) tipo_queimada = Queimada.TipoQueimada.values()
+//                [tipo_queimadabuttonGroup.getSelection().getMnemonic()];
+//        return tipo_queimada;
+//    }
     
     public void limparFiltros(){
         tipo_queimadabuttonGroup.clearSelection();
@@ -31,10 +45,13 @@ public class PainelFiltroQueimada extends javax.swing.JPanel {
 
         tipoQueimadaLabel.setText("Tipo Queimada");
 
+        tipo_queimadabuttonGroup.add(florestaRadioButton);
         florestaRadioButton.setText("floresta");
 
+        tipo_queimadabuttonGroup.add(urbanaRadioButton);
         urbanaRadioButton.setText("urbana");
 
+        tipo_queimadabuttonGroup.add(canavialRadioButton);
         canavialRadioButton.setText("canavial");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
