@@ -3,6 +3,9 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="tipo_queimadabuttonGroup">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PainelFiltroQueimada_tipo_queimadabuttonGroup"/>
+      </AuxValues>
     </Component>
   </NonVisualComponents>
   <AuxValues>

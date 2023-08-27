@@ -37,7 +37,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         Timestamp data_minima = null;
         String data_minima_str = data_minima_noticiaTextField.getText();
         if (!data_minima_str.isEmpty()) {
-            String[] data_minima_partes = data_minima_str.split("/");
+            String[] data_minima_partes = data_minima_str.toString().split("/");
             String dia = data_minima_partes[0];
             String mes = data_minima_partes[1];
             String ano = data_minima_partes[2];
@@ -324,7 +324,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         
         char inundacao_ativo = 'X';
         
-        TipoQueimada tipo_queimada_enum = null;
+        TipoQueimada tipo_queimada = null;
         
         TipoVazamentoNuclear tipo_vazamento_nuclear = null;
         
@@ -334,16 +334,16 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
             inundacao_ativo = filtro_inundacaoPainel.getInundacaoAtiva();
         }else 
             if(indice_aba_selecionada == 1){
-            tipo_queimada_enum = filtro_queimadaPainel.getSelectedTipoQueimada();
-        }else 
-                if(indice_aba_selecionada == 2){
-            tipo_vazamento_nuclear = filtro_vazamento_nuclearPainel.getSelectedTipoVazamentoNuclear();
-        }
+                tipo_queimada = filtro_queimadaPainel.getSelectedTipoQueimada();
+        }else
+                if (indice_aba_selecionada == 2) {
+                    tipo_vazamento_nuclear = filtro_vazamento_nuclearPainel.getSelectedTipoVazamentoNuclear();
+                }
         
         Timestamp data_minima = getDataMinima();
         
         ArrayList<Noticia> noticias = Noticia.pesquisaNoticia(chave_agencia_noticia, chave_catastrofe, grau_urgencia, 
-                inundacao_ativo, tipo_queimada_enum, tipo_vazamento_nuclear, data_minima);
+                inundacao_ativo, tipo_queimada, tipo_vazamento_nuclear, data_minima);
         
         mostrarNoticiasSelecionadas(noticias);
     }//GEN-LAST:event_pesquisarNoticia

@@ -12,8 +12,20 @@ public class PainelFiltroQueimada extends javax.swing.JPanel {
     public Queimada.TipoQueimada getSelectedTipoQueimada(){
         Queimada.TipoQueimada tipo_queimada = null;
         
-        if(tipo_queimadabuttonGroup.getSelection() != null) 
-            tipo_queimada = Queimada.TipoQueimada.values()[tipo_queimadabuttonGroup.getSelection().getMnemonic()];
+        if(tipo_queimadabuttonGroup.getSelection() != null){
+            if (florestaRadioButton.isSelected()) {
+                tipo_queimada = Queimada.TipoQueimada.floresta;
+            }
+            if (urbanaRadioButton.isSelected()) {
+                tipo_queimada = Queimada.TipoQueimada.urbana;
+            }
+            if (canavialRadioButton.isSelected()) {
+                tipo_queimada = Queimada.TipoQueimada.canavial;
+            }          
+        }
+            //tipo_queimada = Queimada.TipoQueimada.values()[tipo_queimadabuttonGroup.getSelection().getMnemonic()];
+        
+        System.out.println(tipo_queimada);
         return tipo_queimada;
     }
     

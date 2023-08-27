@@ -11,9 +11,17 @@ public class PainelFiltroVazamentoNuclear extends javax.swing.JPanel {
     
     public VazamentoNuclear.TipoVazamentoNuclear getSelectedTipoVazamentoNuclear() {
         VazamentoNuclear.TipoVazamentoNuclear tipo_vazamento_nuclear = null;
-        if (tipo_vazamento_nuclearbuttonGroup.getSelection() != null) {
-            tipo_vazamento_nuclear = VazamentoNuclear.TipoVazamentoNuclear.values()
-                    [tipo_vazamento_nuclearbuttonGroup.getSelection().getMnemonic()];
+        
+        if(tipo_vazamento_nuclearbuttonGroup.getSelection() != null){
+            if (reator_nuclearRadioButton.isSelected()) {
+                tipo_vazamento_nuclear = VazamentoNuclear.TipoVazamentoNuclear.reator_nuclear;
+            }
+            if (laboratorio_pesquisaRadioButton.isSelected()) {
+                tipo_vazamento_nuclear = VazamentoNuclear.TipoVazamentoNuclear.laboratorio_pesquisa;
+            }
+            if (rejeitos_radioativoRadioButton.isSelected()) {
+                tipo_vazamento_nuclear = VazamentoNuclear.TipoVazamentoNuclear.rejeitos_radioativo;
+            }          
         }
         return tipo_vazamento_nuclear;
     }
