@@ -226,13 +226,14 @@ public class Noticia {
     }
     
     public static ArrayList<Noticia> pesquisaNoticia(String chave_agencia_noticia, int chave_catastrofe, char grau_urgencia, 
-                int inundacao_ativo, TipoQueimada tipo_queimada_enum, TipoVazamentoNuclear tipo_vazamento_nuclear, Timestamp data_minima){
-        String sql = "SELECT A.Cnpj, C.Sequencial, N.Sequencial"
+                char inundacao_ativo, TipoQueimada tipo_queimada_enum, TipoVazamentoNuclear tipo_vazamento_nuclear, Timestamp data_minima){
+        String sql = "SELECT A.Cnpj, C.Sequencial, N.Sequencial, N.GrauUrgencia "
                 + " FROM Agencia A, Catastrofe C, Noticia N"
                 + " WHERE N.AgenciaID = A.Cnpj AND N.CatastrofeID = C.Sequencial";
         
         if(chave_agencia_noticia != null) sql += " AND A.Cnpj = ?";
         if(chave_catastrofe > -1) sql += " AND C.Sequencial = ?";
+        if(grau_urgencia != 'X') sql += " AND N.GrauUrgencia = ?";
         
         sql += " ORDER BY N.Sequencial";
         
@@ -247,19 +248,52 @@ public class Noticia {
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
             if(chave_agencia_noticia != null) comando.setString(++index, chave_agencia_noticia);
             if(chave_catastrofe > -1) comando.setInt(++index, chave_catastrofe);
+            if(grau_urgencia != 'X') comando.setString(++index, grau_urgencia + "");
             
             lista_resultados = comando.executeQuery();
             
             while(lista_resultados.next()){
                 Noticia noticias_pesquisadas = Noticia.buscarNoticias(lista_resultados.getInt(3));
                 sequencial_catastrofe = lista_resultados.getInt(2);
-                noticias_selecionadas.add(noticias_pesquisadas);
+                if(inundacao_ativo != 'X'){
+                    if(isOkPesquisaInundacao(sequencial_catastrofe, inundacao_ativo))
+                        noticias_selecionadas.add(noticias_pesquisadas);
+                }else{
+                    noticias_selecionadas.add(noticias_pesquisadas);
+                }
+                
             }
             lista_resultados.close();
             comando.close();
         }catch(SQLException excecao_sql){excecao_sql.printStackTrace();}
         
         return noticias_selecionadas;
+    }
+    
+    private static boolean isOkPesquisaInundacao(int sequencial_catastrofe, char inundacao_ativo){
+        boolean pesquisa_ok = false;
+        String sql= "SELECT * FROM inundacao WHERE catastrofeID = ?";
+        
+        if(inundacao_ativo != 'X') sql += " AND ativo = ?";
+        
+        ResultSet lista_resultados = null;
+        
+        int index = 1;
+        
+        try{
+            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+            comando.setInt(1, sequencial_catastrofe);
+            switch(inundacao_ativo){
+                case 'T': comando.setBoolean(++index, true); break;
+                case 'F': comando.setBoolean(++index, false);
+            }
+            lista_resultados = comando.executeQuery();
+            while(lista_resultados.next()) pesquisa_ok = true;
+            lista_resultados.close();
+            comando.close();
+        }catch(SQLException excecao_sql){excecao_sql.printStackTrace();}
+        
+        return pesquisa_ok;
     }
         
     

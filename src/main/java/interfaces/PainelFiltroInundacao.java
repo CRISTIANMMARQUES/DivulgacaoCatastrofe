@@ -7,19 +7,13 @@ public class PainelFiltroInundacao extends javax.swing.JPanel {
         initComponents();
     }
     
-    public int getInundacaoAtiva(){
-        int inundacao_ativa = -1;
+    public char getInundacaoAtiva(){
+        char inundacao_ativa = 'X';
+        
         if(inundacao_AtivabuttonGroup.getSelection() != null){
-            if(inundacao_AtivabuttonGroup.getSelection().getMnemonic() == 'F'){
-                inundacao_ativa = 0;
-            }else if(inundacao_AtivabuttonGroup.getSelection().getMnemonic() == 'T'){
-                inundacao_ativa = 1;
-            }
-//            switch(inundacao_AtivabuttonGroup.getSelection().getMnemonic()){
-//                case 0: inundacao_ativa = 'T'; break;
-//                case 1: inundacao_ativa = 'F';
-//            }
+            inundacao_ativa = (char) inundacao_AtivabuttonGroup.getSelection().getMnemonic();
         }
+        
         return inundacao_ativa;
     }
     

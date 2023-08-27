@@ -322,7 +322,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         char grau_urgencia = 'X';
         if(grau_urgenciabuttonGroup.getSelection() != null){grau_urgencia = (char) grau_urgenciabuttonGroup.getSelection().getMnemonic();}
         
-        int inundacao_ativo = -1;
+        char inundacao_ativo = 'X';
         
         TipoQueimada tipo_queimada_enum = null;
         
@@ -341,11 +341,6 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         }
         
         Timestamp data_minima = getDataMinima();
-        
-//        System.out.println(tipo_queimada_enum);
-        
-        System.out.println(chave_agencia_noticia +"\n"+ chave_catastrofe +"\n"+ grau_urgencia +"\n"+ 
-                inundacao_ativo +"\n"+ tipo_queimada_enum +"\n"+ tipo_vazamento_nuclear +"\n"+ data_minima);
         
         ArrayList<Noticia> noticias = Noticia.pesquisaNoticia(chave_agencia_noticia, chave_catastrofe, grau_urgencia, 
                 inundacao_ativo, tipo_queimada_enum, tipo_vazamento_nuclear, data_minima);
