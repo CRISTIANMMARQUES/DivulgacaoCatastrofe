@@ -83,20 +83,20 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="limpar_FiltrosButton">
+        <Component class="javax.swing.JButton" name="limparFiltros">
           <Properties>
             <Property name="text" type="java.lang.String" value="Limpar Filtros"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="limpar_FiltrosButton"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="limparFiltros"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="limpar_noticias_selecionadasButton">
+        <Component class="javax.swing.JButton" name="limparNoticiasSelecionadas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Limpar Noticias Selecionadas"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="limpar_noticias_selecionadasButton"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="limparNoticiasSelecionadas"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="pesquisarNoticiaButton">
@@ -104,7 +104,7 @@
             <Property name="text" type="java.lang.String" value="Pesquisar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pesquisarNoticiaButton"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pesquisarNoticia"/>
           </Events>
         </Component>
       </SubComponents>

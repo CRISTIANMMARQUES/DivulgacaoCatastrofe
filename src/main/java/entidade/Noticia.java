@@ -55,7 +55,7 @@ public class Noticia {
         return visoes.toArray(new Noticia[visoes.size()]);
     }
     
-    public static Noticia buscarNoticias(int sequencial) {
+   public static Noticia buscarNoticias(int sequencial) {
         String sql = "SELECT * FROM Noticia WHERE Sequencial = ?";
         ResultSet lista_resultados = null;
         Noticia noticia = null;
@@ -225,104 +225,148 @@ public class Noticia {
         return str;
     }
     
-    public static ArrayList<Noticia> pesquisarNoticia(String chave_agencia_noticia, int chave_catastrofe, char grau_urgencia, int inundacao_ativa, 
-            int tipo_queimada, TipoVazamentoNuclear tipo_vazamento_nuclear, Timestamp data_minima){
-        //System.out.println("Entidade Noticia: "+inundacao_ativa);
-        //int inundacao_ativa_int = 0;
-        String sql = "SELECT A.Cnpj, C.Sequencial, N.GrauUrgencia, I.Ativo, Q.tipo_queimada, V.tipo_vazamento_nuclear, N.Sequencial, N.DataHora\n" +
-                "FROM Agencia A, Catastrofe C, Noticia N, Inundacao I, Queimada Q, Vazamento_nuclear V\n" +
-                "WHERE N.AgenciaID = A.Cnpj AND N.CatastrofeID = C.Sequencial";
+    public static ArrayList<Noticia> pesquisaNoticia(String chave_agencia_noticia, int chave_catastrofe, char grau_urgencia, 
+                int inundacao_ativo, TipoQueimada tipo_queimada_enum, TipoVazamentoNuclear tipo_vazamento_nuclear, Timestamp data_minima){
+        String sql = "SELECT A.Cnpj, C.Sequencial, N.Sequencial"
+                + " FROM Agencia A, Catastrofe C, Noticia N"
+                + " WHERE N.AgenciaID = A.Cnpj AND N.CatastrofeID = C.Sequencial";
+        
         if(chave_agencia_noticia != null) sql += " AND A.Cnpj = ?";
         if(chave_catastrofe > -1) sql += " AND C.Sequencial = ?";
-        if(grau_urgencia != 'X') sql += " AND N.GrauUrgencia = ?";
-        if(inundacao_ativa > -1) sql += " AND I.Ativo = ?";
-        //if(inundacao_ativa_int > -1) sql += " AND I.Ativo = ?";
-        if(tipo_queimada > -1) sql += " AND Q.tipo_queimada = ?";
-        if(tipo_vazamento_nuclear != null) sql += " AND V.tipo_vazamento_nuclear = ?";
-        if(data_minima != null) sql += " AND N.DataHora >= ?";
+        
         sql += " ORDER BY N.Sequencial";
         
-        ResultSet lista_resultados= null;
-        ArrayList<Noticia> noticias_selecionadas = new ArrayList<>();
+        ResultSet lista_resultados = null;
+        
+        ArrayList<Noticia> noticias_selecionadas = new ArrayList();
+        
         int index = 0;
-        String sequencial_catastrofe = null;
-        int sequencial_noticia = -1;
-        try {
-            
+        int sequencial_catastrofe = -1;
+        
+        try{
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
-            if (chave_agencia_noticia != null) comando.setString(++index, chave_agencia_noticia);
-            if (chave_catastrofe > -1) comando.setInt(++index, chave_catastrofe);
-            if (grau_urgencia != 'X') comando.setString(++index, grau_urgencia + "");
-            //if (inundacao_ativa != 'X') comando.setString(++index, inundacao_ativa + "");
-            if (inundacao_ativa > -1) comando.setInt(++index, inundacao_ativa);
-
-            if (tipo_queimada > -1) comando.setInt(++index, tipo_queimada);
-            if (tipo_vazamento_nuclear != null) comando.setInt(++index, tipo_vazamento_nuclear.ordinal());
-            if (data_minima != null) comando.setTimestamp(++index, data_minima);
+            if(chave_agencia_noticia != null) comando.setString(++index, chave_agencia_noticia);
+            if(chave_catastrofe > -1) comando.setInt(++index, chave_catastrofe);
+            
             lista_resultados = comando.executeQuery();
             
             while(lista_resultados.next()){
-                Noticia noticias_pesquisadas = Noticia.buscarNoticias(lista_resultados.getInt(7));
-                sequencial_catastrofe = lista_resultados.getString(2);
-//                System.out.println(sequencial_noticia);
-                
-                if(grau_urgencia != 'X'){
-                    
-                    if(isOkPesquisaEmNoticia(sequencial_noticia, grau_urgencia)) noticias_selecionadas.add(noticias_pesquisadas);
-                }
-//                if(inundacao_ativa != 'X'){
-//                    if(isOkPesquisaEmInundação(sequencial_catastrofe ,inundacao_ativa)) noticias_selecionadas.add(noticias_pesquisadas);
-//                }else{
-//                    noticias_selecionadas.add(noticias_pesquisadas);
-//                }
+                Noticia noticias_pesquisadas = Noticia.buscarNoticias(lista_resultados.getInt(3));
+                sequencial_catastrofe = lista_resultados.getInt(2);
                 noticias_selecionadas.add(noticias_pesquisadas);
             }
-            
-            
+            lista_resultados.close();
             comando.close();
         }catch(SQLException excecao_sql){excecao_sql.printStackTrace();}
         
         return noticias_selecionadas;
     }
-    private static boolean isOkPesquisaEmNoticia(int sequencial_noticia, char grau_urgencia){
+        
+    
+//    public static ArrayList<Noticia> pesquisarNoticia(String chave_agencia_noticia, int chave_catastrofe, char grau_urgencia, int inundacao_ativa, 
+//            TipoQueimada tipo_queimada_enum, TipoVazamentoNuclear tipo_vazamento_nuclear, Timestamp data_minima){
+//        
+//        String sql = "SELECT A.Cnpj, C.Sequencial, N.GrauUrgencia, I.Ativo, Q.tipo_queimada, V.tipo_vazamento_nuclear, N.Sequencial, N.DataHora\n" +
+//                "FROM Agencia A, Catastrofe C, Noticia N, Inundacao I, Queimada Q, Vazamento_nuclear V\n" +
+//                "WHERE N.AgenciaID = A.Cnpj AND N.CatastrofeID = C.Sequencial";
+//        
+//        if(chave_agencia_noticia != null) sql += " AND A.Cnpj = ?";
+//        if(chave_catastrofe > -1) sql += " AND C.Sequencial = ?";
+//        //if(grau_urgencia != 'X') sql += " AND N.GrauUrgencia = ?";
+//        if(inundacao_ativa > -1) sql += " AND I.Ativo = ?";
+//        if(tipo_vazamento_nuclear != null) sql += " AND V.tipo_vazamento_nuclear = ?";
+//        if(data_minima != null) sql += " AND N.DataHora >= ?";
+//        sql += " ORDER BY N.Sequencial";
+//        
+//        ResultSet lista_resultados= null;
+//        ArrayList<Noticia> noticias_selecionadas = new ArrayList<>();
+//        
+//        int index = 0;
+//        int sequencial_catastrofe = -1;
+//        int sequencial_noticia = -1;
+//        
+//        try {
+//            
+//            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+//            if (chave_agencia_noticia != null) comando.setString(++index, chave_agencia_noticia);
+//            if (chave_catastrofe > -1) comando.setInt(++index, chave_catastrofe);
+//            //if (grau_urgencia != 'X') comando.setString(++index, grau_urgencia + "");
+//            if (inundacao_ativa > -1) comando.setInt(++index, inundacao_ativa);
+//            if (tipo_vazamento_nuclear != null) comando.setInt(++index, tipo_vazamento_nuclear.ordinal());
+//            if (data_minima != null) comando.setTimestamp(++index, data_minima);
+//            
+//            lista_resultados = comando.executeQuery();
+//            
+//            while(lista_resultados.next()){
+//                //System.out.println("ESTÁ FUNCIONANDO");
+//                Noticia noticias_pesquisadas = Noticia.buscarNoticias(lista_resultados.getInt(7));
+//                sequencial_catastrofe = lista_resultados.getInt(2);
+//                
+//                if(grau_urgencia != 'X'){                    
+//                    if(isOkPesquisaEmNoticia(sequencial_noticia, grau_urgencia)){
+//                        noticias_selecionadas.add
+//                        (noticias_pesquisadas);
+//                    }
+//                }
+//                if(tipo_queimada_enum != null){
+//                    if(isOkPesquisaEmQueimada(sequencial_catastrofe, tipo_queimada_enum)) noticias_selecionadas.add
+//                        (noticias_pesquisadas);
+//                }else{
+//                    noticias_selecionadas.add(noticias_pesquisadas);
+//                }
+//            }
+//            
+//            lista_resultados.close();
+//            comando.close();
+//        }catch(SQLException excecao_sql){excecao_sql.printStackTrace();}
+//        
+//        //System.out.println(noticias_selecionadas);
+//        
+//        return noticias_selecionadas;
+//    }
+    
+//    private static boolean isOkPesquisaEmNoticia(int sequencial_noticia, char grau_urgencia){
+//        boolean pesquisa_ok = false;
+//        String sql = "SELECT *FROM noticia WHERE sequencial = ?";
+//        if(grau_urgencia != 'X') sql += " AND GrauUrgencia = ?";
+//        ResultSet lista_resultados = null;
+//        int index = 1;
+//        try{
+//            PreparedStatement comando = BD.conexão.prepareStatement(sql);
+//            comando.setInt(1, sequencial_noticia);
+//            switch(grau_urgencia){
+//                case 'B': comando.setBoolean(++index, true); break;
+//                case 'M': comando.setBoolean(++index, true); break;
+//                case 'U': comando.setBoolean(++index, true); break;
+//            }
+//            lista_resultados = comando.executeQuery();
+//            while(lista_resultados.next()) pesquisa_ok = true;
+//            lista_resultados.close();
+//        }catch (SQLException excecao_sql){excecao_sql.printStackTrace();}
+//        return pesquisa_ok;
+//    }
+    
+    private static boolean isOkPesquisaEmQueimada(int sequencial_catastrofe, TipoQueimada tipo_queimada_enum){
         boolean pesquisa_ok = false;
-        String sql = "SELECT *FROM noticia WHERE sequencial = ?";
-        if(grau_urgencia != 'X') sql += " AND GrauUrgencia = ?";
+        String sql = "SELECT * FROM queimada WHERE catastrofeId = ?";
+        
+        if(tipo_queimada_enum != null) sql += " AND tipo_queimada";
+        
         ResultSet lista_resultados = null;
         int index = 1;
+        
         try{
             PreparedStatement comando = BD.conexão.prepareStatement(sql);
-            comando.setInt(1, sequencial_noticia);
-            switch(grau_urgencia){
-                case 'B': comando.setBoolean(++index, true); break;
-                case 'M': comando.setBoolean(++index, true); break;
-                case 'U': comando.setBoolean(++index, true); break;
-            }
+            comando.setInt(1, sequencial_catastrofe);
+            if(tipo_queimada_enum != null)comando.setInt(++index, tipo_queimada_enum.ordinal());
             lista_resultados = comando.executeQuery();
             while(lista_resultados.next()) pesquisa_ok = true;
             lista_resultados.close();
-        }catch (SQLException excecao_sql){excecao_sql.printStackTrace();}
+            comando.close();
+        }catch(SQLException excecao_sql){excecao_sql.printStackTrace();}
+        
         return pesquisa_ok;
-    }
-    
-    private static boolean isOkPesquisaEmInundação(String sequencial_catastrofe, char inundacao_ativa){
-        boolean pesquisa_ok = false;
-        String sql = "SELECT * FROM inundacao WHERE catastrofeid = ?";
-        if(inundacao_ativa != 'X') sql += " AND Ativo = ?";
-        ResultSet lista_resultados = null;
-        int index = 1;
-        try{
-            PreparedStatement comando = BD.conexão.prepareStatement(sql);
-            comando.setString(1, sequencial_catastrofe);
-            switch(inundacao_ativa){
-                case 'T': comando.setBoolean(++index, true);break;
-                case 'F': comando.setBoolean(++index, false);
-            }
-            lista_resultados = comando.executeQuery();
-            while(lista_resultados.next())pesquisa_ok = true;
-            lista_resultados.close();
-        }catch (SQLException excecao_sql){excecao_sql.printStackTrace();}
-        return pesquisa_ok;
+        
     }
     public Noticia getVisao() {
         return new Noticia(sequencial, agencia_id, catastrofe_id);

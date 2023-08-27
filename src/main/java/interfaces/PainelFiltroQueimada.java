@@ -9,25 +9,26 @@ public class PainelFiltroQueimada extends javax.swing.JPanel {
         initComponents();
     }
     
-    public int getSelectedTipoQueimada() {
-        int tipoQueimadaInt = -1; // Valor padrão caso nenhum tipo seja selecionado
-
-        if (florestaRadioButton.isSelected()) {
-            tipoQueimadaInt = 0;
-        } else if (urbanaRadioButton.isSelected()) {
-            tipoQueimadaInt = 1;
-        } else if (canavialRadioButton.isSelected()) {
-            tipoQueimadaInt = 2;
-        }
-
-        return tipoQueimadaInt;
+    public Queimada.TipoQueimada getSelectedTipoQueimada(){
+        Queimada.TipoQueimada tipo_queimada = null;
+        
+        if(tipo_queimadabuttonGroup.getSelection() != null) 
+            tipo_queimada = Queimada.TipoQueimada.values()[tipo_queimadabuttonGroup.getSelection().getMnemonic()];
+        return tipo_queimada;
     }
     
-//    public Queimada.TipoQueimada getSelectedTipoQueimada(){
-//        Queimada.TipoQueimada tipo_queimada = null;
-//        if(tipo_queimadabuttonGroup.getSelection() != null) tipo_queimada = Queimada.TipoQueimada.values()
-//                [tipo_queimadabuttonGroup.getSelection().getMnemonic()];
-//        return tipo_queimada;
+//    public int getSelectedTipoQueimada() {
+//        int tipoQueimadaInt = -1; // Valor padrão caso nenhum tipo seja selecionado
+//
+//        if (florestaRadioButton.isSelected()) {
+//            tipoQueimadaInt = 0;
+//        } else if (urbanaRadioButton.isSelected()) {
+//            tipoQueimadaInt = 1;
+//        } else if (canavialRadioButton.isSelected()) {
+//            tipoQueimadaInt = 2;
+//        }
+//
+//        return tipoQueimadaInt;
 //    }
     
     public void limparFiltros(){

@@ -31,7 +31,6 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         filtro_noticiasTabbedPane.addTab("Filtro de Inundação", filtro_inundacaoPainel);
         filtro_noticiasTabbedPane.addTab("Filtro de Queimada", filtro_queimadaPainel);
         filtro_noticiasTabbedPane.addTab("Filtro de Vazamento Nuclear", filtro_vazamento_nuclearPainel);
-//        limparFiltros(null);
     }
     
     private Timestamp getDataMinima(){
@@ -52,13 +51,14 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
     
     private void mostrarNoticiasSelecionadas(ArrayList<Noticia> noticias){
         boolean primeira_noticia = true;
+        
         for(Noticia noticia: noticias){
-            //pesquisasTextArea.append(noticia.toStringFull());
             if(primeira_noticia){
                 pesquisasTextArea.append(noticia.toStringFull());
                 primeira_noticia = false;
             }else pesquisasTextArea.append("\n"+noticia.toStringFull());
         }
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -67,8 +67,8 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
 
         grau_urgenciabuttonGroup = new javax.swing.ButtonGroup();
         comandosPanel = new javax.swing.JPanel();
-        limpar_FiltrosButton = new javax.swing.JButton();
-        limpar_noticias_selecionadasButton = new javax.swing.JButton();
+        limparFiltros = new javax.swing.JButton();
+        limparNoticiasSelecionadas = new javax.swing.JButton();
         pesquisarNoticiaButton = new javax.swing.JButton();
         filtro_noticiasTabbedPane = new javax.swing.JTabbedPane();
         filtro_catastrofePanel = new javax.swing.JPanel();
@@ -90,26 +90,26 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        limpar_FiltrosButton.setText("Limpar Filtros");
-        limpar_FiltrosButton.addActionListener(new java.awt.event.ActionListener() {
+        limparFiltros.setText("Limpar Filtros");
+        limparFiltros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limpar_FiltrosButton(evt);
+                limparFiltros(evt);
             }
         });
-        comandosPanel.add(limpar_FiltrosButton);
+        comandosPanel.add(limparFiltros);
 
-        limpar_noticias_selecionadasButton.setText("Limpar Noticias Selecionadas");
-        limpar_noticias_selecionadasButton.addActionListener(new java.awt.event.ActionListener() {
+        limparNoticiasSelecionadas.setText("Limpar Noticias Selecionadas");
+        limparNoticiasSelecionadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limpar_noticias_selecionadasButton(evt);
+                limparNoticiasSelecionadas(evt);
             }
         });
-        comandosPanel.add(limpar_noticias_selecionadasButton);
+        comandosPanel.add(limparNoticiasSelecionadas);
 
         pesquisarNoticiaButton.setText("Pesquisar");
         pesquisarNoticiaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pesquisarNoticiaButton(evt);
+                pesquisarNoticia(evt);
             }
         });
         comandosPanel.add(pesquisarNoticiaButton);
@@ -293,7 +293,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void limpar_FiltrosButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpar_FiltrosButton
+    private void limparFiltros(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparFiltros
         catastrofes_cadastradasComboBox.setSelectedIndex(-1);
         agencia_noticiasComboBox.setSelectedIndex(-1);
         grau_urgenciabuttonGroup.clearSelection();
@@ -301,26 +301,30 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         filtro_queimadaPainel.limparFiltros();
         filtro_vazamento_nuclearPainel.limparFiltros();
         data_minima_noticiaTextField.setText("");
-    }//GEN-LAST:event_limpar_FiltrosButton
+    }//GEN-LAST:event_limparFiltros
 
-    private void limpar_noticias_selecionadasButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpar_noticias_selecionadasButton
-        // TODO add your handling code here:
+    private void limparNoticiasSelecionadas(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparNoticiasSelecionadas
+
         pesquisasTextArea.setText("");
-    }//GEN-LAST:event_limpar_noticias_selecionadasButton
+        
+    }//GEN-LAST:event_limparNoticiasSelecionadas
 
-    private void pesquisarNoticiaButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarNoticiaButton
+    private void pesquisarNoticia(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarNoticia
+        
         int chave_catastrofe = -1;
-        if(catastrofes_cadastradasComboBox.getSelectedItem() != null){chave_catastrofe = ((Catastrofe) catastrofes_cadastradasComboBox.getSelectedItem()).getSequencial();}
+        if(catastrofes_cadastradasComboBox.getSelectedItem() != null)
+            chave_catastrofe = ((Catastrofe) catastrofes_cadastradasComboBox.getSelectedItem()).getSequencial();
         
         String chave_agencia_noticia = null;
-        if(agencia_noticiasComboBox.getSelectedItem() != null){chave_agencia_noticia = ((AgenciaNoticia) agencia_noticiasComboBox.getSelectedItem()).getCnpj();}
+        if(agencia_noticiasComboBox.getSelectedItem() != null)
+            chave_agencia_noticia = ((AgenciaNoticia) agencia_noticiasComboBox.getSelectedItem()).getCnpj();
         
         char grau_urgencia = 'X';
         if(grau_urgenciabuttonGroup.getSelection() != null){grau_urgencia = (char) grau_urgenciabuttonGroup.getSelection().getMnemonic();}
         
         int inundacao_ativo = -1;
         
-        int tipo_queimada = -1;
+        TipoQueimada tipo_queimada_enum = null;
         
         TipoVazamentoNuclear tipo_vazamento_nuclear = null;
         
@@ -328,22 +332,26 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         
         if(indice_aba_selecionada == 0){
             inundacao_ativo = filtro_inundacaoPainel.getInundacaoAtiva();
-        }else if(indice_aba_selecionada == 1){
-            tipo_queimada = filtro_queimadaPainel.getSelectedTipoQueimada();
-            System.out.println(tipo_queimada);
-        }else if(indice_aba_selecionada == 2){
+        }else 
+            if(indice_aba_selecionada == 1){
+            tipo_queimada_enum = filtro_queimadaPainel.getSelectedTipoQueimada();
+        }else 
+                if(indice_aba_selecionada == 2){
             tipo_vazamento_nuclear = filtro_vazamento_nuclearPainel.getSelectedTipoVazamentoNuclear();
         }
         
         Timestamp data_minima = getDataMinima();
         
-        ArrayList<Noticia> noticias = Noticia.pesquisarNoticia(chave_agencia_noticia, chave_catastrofe, grau_urgencia, 
-                inundacao_ativo, tipo_queimada, tipo_vazamento_nuclear, data_minima);
+//        System.out.println(tipo_queimada_enum);
         
+        System.out.println(chave_agencia_noticia +"\n"+ chave_catastrofe +"\n"+ grau_urgencia +"\n"+ 
+                inundacao_ativo +"\n"+ tipo_queimada_enum +"\n"+ tipo_vazamento_nuclear +"\n"+ data_minima);
         
+        ArrayList<Noticia> noticias = Noticia.pesquisaNoticia(chave_agencia_noticia, chave_catastrofe, grau_urgencia, 
+                inundacao_ativo, tipo_queimada_enum, tipo_vazamento_nuclear, data_minima);
         
         mostrarNoticiasSelecionadas(noticias);
-    }//GEN-LAST:event_pesquisarNoticiaButton
+    }//GEN-LAST:event_pesquisarNoticia
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ScrollPane;
@@ -362,8 +370,8 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
     private javax.swing.JTabbedPane filtro_noticiasTabbedPane;
     private javax.swing.JLabel grau_urgenciaLabel;
     private javax.swing.ButtonGroup grau_urgenciabuttonGroup;
-    private javax.swing.JButton limpar_FiltrosButton;
-    private javax.swing.JButton limpar_noticias_selecionadasButton;
+    private javax.swing.JButton limparFiltros;
+    private javax.swing.JButton limparNoticiasSelecionadas;
     private javax.swing.JRadioButton medioRadioButton;
     private javax.swing.JButton pesquisarNoticiaButton;
     private javax.swing.JTextArea pesquisasTextArea;
