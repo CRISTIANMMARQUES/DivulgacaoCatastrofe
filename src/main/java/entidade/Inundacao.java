@@ -17,8 +17,8 @@ public class Inundacao extends Catastrofe {
     }
     
     public String toStringFull() {
-        String str = super.toStringFull() + "\n        Tipo Catastrofe: " +tipo_inundacao;
-        if(descricao != null) str += "\n        Descrição: " +descricao;
+        String str = super.toStringFull() + " --Tipo Catastrofe: Inundação -- " +tipo_inundacao;
+        if(descricao != null) str += " --Descrição: " +descricao;
         if (ativo){
             str += "Inundação ATIVA";
         }else{

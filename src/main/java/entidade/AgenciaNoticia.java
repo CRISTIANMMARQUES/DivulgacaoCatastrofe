@@ -129,9 +129,9 @@ public class AgenciaNoticia {
     }
     
     public String toStringFull(){
-        return "Agencia Noticia: "+"\n            CNPJ: "+cnpj
-                                  +"\n            Nome: "+nome
-                                  +"\n        Endereço: "+endereco;
+        return "Agencia Noticia: "+" --CNPJ: "+cnpj
+                                  +" --Nome: "+nome
+                                  +" --Endereço: "+endereco;
     }
     
     public AgenciaNoticia getVisao() {

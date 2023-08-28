@@ -228,6 +228,7 @@ public class JanelaPesquisaNoticias extends javax.swing.JFrame {
         avaliacoesSelecionadasPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Avaliações Selecionadas"));
 
         pesquisasTextArea.setColumns(20);
+        pesquisasTextArea.setLineWrap(true);
         pesquisasTextArea.setRows(5);
         ScrollPane.setViewportView(pesquisasTextArea);
 

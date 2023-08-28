@@ -213,7 +213,7 @@ public class Noticia {
     }
     
     public String toStringFull(){
-        String str = agencia_id.toStringFull() + catastrofe_id.toStringFull() + "\n          ";
+        String str = agencia_id.toStringFull() + " -- " + catastrofe_id.toStringFull() + " -- ";
         if(grau_urgencia == 'B'){
             str += "Grau Urgencia: Baixo";
         }else if(grau_urgencia == 'M'){
@@ -221,7 +221,7 @@ public class Noticia {
         }else if(grau_urgencia == 'U'){
             str += "Grau Urgencia: Urgente";
         }
-        str += "\n       Horário Criação: "+formatarDataHora(data_hora.toString()) + "\n";
+        str += " -- "+formatarDataHora(data_hora.toString()) + "\n";
         return str;
     }
     
